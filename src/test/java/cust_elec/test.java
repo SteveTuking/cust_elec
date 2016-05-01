@@ -22,7 +22,7 @@ public class test {
 		ElecText elecText = new ElecText();
 		elecText.setTextDate(new Date());
 		elecText.setTextID(UUID.randomUUID().toString());
-		elecText.setTextName("×··çÁõÉÙ");
+		elecText.setTextName("åˆ˜å°‘");
 		s.save(elecText);
 		System.out.println("hello world");
 		tr.commit();
