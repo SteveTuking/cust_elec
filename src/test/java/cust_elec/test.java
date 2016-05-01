@@ -24,7 +24,7 @@ public class test {
 		elecText.setTextID(UUID.randomUUID().toString());
 		elecText.setTextName("◊∑∑Á¡ı…Ÿ");
 		s.save(elecText);
-		
+		System.out.println("hello world");
 		tr.commit();
 		s.close();
 	}
