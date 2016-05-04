@@ -1,4 +1,4 @@
-package com.itheima.elec.dao;
+package cn.cust.elec.dao;
 
 import java.io.Serializable;
 import java.util.List;

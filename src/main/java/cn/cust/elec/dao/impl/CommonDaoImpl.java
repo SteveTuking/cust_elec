@@ -1,4 +1,4 @@
-package com.itheima.elec.dao.impl;
+package cn.cust.elec.dao.impl;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -14,8 +14,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import com.itheima.elec.dao.ICommonDao;
 import com.itheima.elec.utils.TUtil;
+
+import cn.cust.elec.dao.ICommonDao;
+
 
 public class CommonDaoImpl<T> extends HibernateDaoSupport implements ICommonDao<T> {
 	

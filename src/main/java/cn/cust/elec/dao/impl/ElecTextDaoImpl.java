@@ -1,9 +1,10 @@
-package com.itheima.elec.dao.impl;
+package cn.cust.elec.dao.impl;
 
 import org.springframework.stereotype.Repository;
 
-import com.itheima.elec.dao.IElecTextDao;
-import com.itheima.elec.domain.ElecText;
+import cn.cust.elec.dao.IElecTextDao;
+import cn.cust.elec.domain.ElecText;
+
 
 /**
  * @Repository(IElecTextDao.SERVICE_NAME)

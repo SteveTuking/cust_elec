@@ -1,6 +1,6 @@
-package com.itheima.elec.dao;
+package cn.cust.elec.dao;
 
-import com.itheima.elec.domain.ElecText;
+import cn.cust.elec.domain.ElecText;
 
 public interface IElecTextDao extends ICommonDao<ElecText> {
 	
