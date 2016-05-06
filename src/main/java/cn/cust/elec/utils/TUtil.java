@@ -1,4 +1,4 @@
-package com.itheima.elec.utils;
+package cn.cust.elec.utils;
 
 import java.lang.reflect.ParameterizedType;
 

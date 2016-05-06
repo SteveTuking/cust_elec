@@ -4,7 +4,7 @@
   <artifactId>cust_elec</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>custelec</name>
+  <name>cust_elec</name>
   <description>zhangbing guaduation project</description>
   
   <dependencies>
@@ -118,11 +118,13 @@
 		</dependency>
 	</dependencies>
   <build>
-		<finalName>itheima1128elecMaven</finalName>
+		<finalName>cust_elec</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+				 <version>3.1</version>
 				<configuration>
+					<encoding>utf-8</encoding>
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>

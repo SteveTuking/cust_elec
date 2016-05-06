@@ -12,7 +12,7 @@ import cn.cust.elec.domain.ElecText;
  * <bean id="com.itheima.elec.dao.impl.ElecTextDaoImpl" class="com.itheima.elec.dao.impl.ElecTextDaoImpl">
  *
  */
-@Repository(IElecTextDao.SERVICE_NAME)
+@Repository
 public class ElecTextDaoImpl  extends CommonDaoImpl<ElecText> implements IElecTextDao {
 
 }

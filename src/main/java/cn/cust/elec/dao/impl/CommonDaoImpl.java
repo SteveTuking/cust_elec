@@ -14,14 +14,14 @@ import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import com.itheima.elec.utils.TUtil;
-
 import cn.cust.elec.dao.ICommonDao;
+import cn.cust.elec.utils.TUtil;
 
 
 public class CommonDaoImpl<T> extends HibernateDaoSupport implements ICommonDao<T> {
 	
 	/**T型转换*/
+	@SuppressWarnings("rawtypes")
 	Class entityClass = TUtil.getActualType(this.getClass());
 	
 	@Resource(name="sessionFactory")
@@ -68,7 +68,7 @@ public class CommonDaoImpl<T> extends HibernateDaoSupport implements ICommonDao<
 		AND o.textRemark LIKE '%张%'   #Service层
 		ORDER BY o.textDate ASC,o.textName DESC  #Service层
 	 */
-	public List<T> findCollectionByConditionNoPage(String condition,
+	/*public List<T> findCollectionByConditionNoPage(String condition,
 			final Object[] params, Map<String, String> orderby) {
 		//hql语句
 		String hql = "from "+entityClass.getSimpleName()+" o where 1=1 ";
@@ -77,9 +77,9 @@ public class CommonDaoImpl<T> extends HibernateDaoSupport implements ICommonDao<
 		//添加查询条件
 		final String finalHql = hql + condition + orderbyCondition;
 		//查询，执行hql语句
-		/**方案一*/
+		*//**方案一*//*
 		//List<T> list = this.getHibernateTemplate().find(finalHql, params);
-		/**方案二*/
+		*//**方案二*//*
 //		SessionFactory sf = this.getHibernateTemplate().getSessionFactory();
 //		Session s = sf.getCurrentSession();//Session与线程绑定
 //		Query query = s.createQuery(finalHql);
@@ -89,7 +89,8 @@ public class CommonDaoImpl<T> extends HibernateDaoSupport implements ICommonDao<
 //			}
 //		}
 //		List<T> list = query.list();
-		/**方案三*/
+		*//**方案三*//*
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<T> list = this.getHibernateTemplate().execute(new HibernateCallback() {
 
 			public Object doInHibernate(Session session)
@@ -105,7 +106,7 @@ public class CommonDaoImpl<T> extends HibernateDaoSupport implements ICommonDao<
 			
 		});
 		return list;
-	}
+	}*/
 
 	/**将Map集合中存放的字段排序，组织成
 	 * ORDER BY o.textDate ASC,o.textName DESC*/
