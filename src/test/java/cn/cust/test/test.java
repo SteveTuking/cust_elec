@@ -4,14 +4,18 @@ package cn.cust.test;
 import java.util.Date;
 import java.util.UUID;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import cn.cust.elec.dao.IElecTextDao;
 import cn.cust.elec.domain.ElecText;
+import cn.cust.elec.service.IElecTextService;
 
 public class test {
+	
+	Log log = LogFactory.getLog(test.class);
 	@Test
 	public void save(){
 		/*Configuration conf = new Configuration();
@@ -29,15 +33,20 @@ public class test {
 		s.close();*/
 		
 		ApplicationContext ac = new ClassPathXmlApplicationContext("beans.xml");
-		IElecTextDao ed = (IElecTextDao)ac.getBean("elecTextDaoImpl");
+		System.out.println("hellow wor ");
+		IElecTextService es = (IElecTextService)ac.getBean("elecTextServiceImpl");
 		
 		ElecText elecText = new ElecText();
 		elecText.setTextDate(new Date());
 		elecText.setTextID(UUID.randomUUID().toString());
 		elecText.setTextName("测试dao层的数据");
 		elecText.setTextRemark("hello world");
-		
-		ed.save(elecText);
+		try {
+			es.saveElecText(elecText);
+		} catch (Exception e) {
+			log.error(e.getMessage(),e);
+			e.printStackTrace();
+		}
 		
 	}
 }
