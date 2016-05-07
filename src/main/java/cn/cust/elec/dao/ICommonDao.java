@@ -12,5 +12,5 @@ public interface ICommonDao<T> {
 	T findObjectByID(Serializable id);
 	void deleteObjectByIds(Serializable... ids);
 	void deleteObjectByCollection(List<T> list);
-	//List<T> findCollectionByConditionNoPage(String condition,Object[] params, Map<String, String> orderby);
+	List<T> findCollectionByConditionNoPage(String condition,Object[] params, Map<String, String> orderby);
 }
