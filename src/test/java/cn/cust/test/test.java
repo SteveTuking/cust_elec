@@ -39,7 +39,7 @@ public class test {
 		ElecText elecText = new ElecText();
 		elecText.setTextDate(new Date());
 		elecText.setTextID(UUID.randomUUID().toString());
-		elecText.setTextName("测试dao层的数据");
+		elecText.setTextName("测试service层的数据");
 		elecText.setTextRemark("hello world");
 		try {
 			es.saveElecText(elecText);
