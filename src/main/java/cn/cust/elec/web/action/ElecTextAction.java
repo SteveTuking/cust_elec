@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 
 import cn.cust.elec.domain.ElecText;
 import cn.cust.elec.service.IElecTextService;
-import cn.cust.test.test;
 
 @SuppressWarnings("serial")
 @Controller
@@ -18,7 +17,7 @@ public class ElecTextAction extends BaseAction<ElecText> {
 	
 	@Autowired
 	private IElecTextService elecTextService;
-	private Log log = LogFactory.getLog(test.class);
+	private Log log = LogFactory.getLog(this.getClass());
 	ElecText elecText = this.getModel();
 	public String save(){
 		
@@ -30,5 +29,6 @@ public class ElecTextAction extends BaseAction<ElecText> {
 		}
 		return "save";
 	}
+
 
 }
