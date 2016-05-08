@@ -14,5 +14,5 @@ import cn.cust.elec.domain.ElecText;
  */
 @Repository
 public class ElecTextDaoImpl  extends CommonDaoImpl<ElecText> implements IElecTextDao {
-
+	
 }

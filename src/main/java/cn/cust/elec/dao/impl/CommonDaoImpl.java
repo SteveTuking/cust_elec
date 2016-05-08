@@ -1,17 +1,12 @@
 package cn.cust.elec.dao.impl;
 
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import cn.cust.elec.dao.ICommonDao;

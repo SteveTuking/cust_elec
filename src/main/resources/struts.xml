@@ -29,5 +29,12 @@
 			<result name="alermStation">/WEB-INF/page/menu/alermStation.jsp</result>
 			<result name="alermDevice">/WEB-INF/page/menu/alermDevice.jsp</result>
 		</action>
+		<action name="elecCommonMsgAction_*" class="elecCommonMsgAction" method="{1}">
+			<result name="home">/WEB-INF/page/system/actingIndex.jsp</result>
+			<result name="save" type="redirectAction">
+				<param name="actionName">elecCommonMsgAction_home.do</param>
+			</result>
+			<result name="actingView">/WEB-INF/page/system/actingView.jsp</result>
+		</action>
 	</package>
 </struts>
