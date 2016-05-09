@@ -1,6 +1,7 @@
 target/
 
-/.setting/
+.externalToolBuilders/
+.setting/
 *.Settings
 *.classpath
 *.project
