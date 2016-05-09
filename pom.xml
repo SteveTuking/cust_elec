@@ -116,7 +116,13 @@
 			<version>4.9</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- log 日志工具包 -->
+		<!-- fkfinder -->
+		<dependency>
+			<groupId>com.ckeditor</groupId>
+			<artifactId>ckeditor-java-core</artifactId>
+			<version>3.5.3</version>
+		</dependency>
+		
 	</dependencies>
   <build>
 		<finalName>cust_elec</finalName>

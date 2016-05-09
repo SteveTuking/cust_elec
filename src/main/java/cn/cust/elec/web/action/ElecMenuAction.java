@@ -1,8 +1,14 @@
 package cn.cust.elec.web.action;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import cn.cust.elec.domain.ElecCommonMsg;
+import cn.cust.elec.service.IElecCommonMsgService;
+import cn.cust.elec.utils.ValueUtils;
 import cn.cust.elec.web.form.MenuForm;
 
 
@@ -14,9 +20,10 @@ public class ElecMenuAction extends BaseAction<MenuForm> {
 	MenuForm menuForm = this.getModel();
 	
 	/**注入运行监控Service*/
-	/*@Autowired
+	@Autowired
 	IElecCommonMsgService elecCommonMsgService;
-	*/
+	//日志
+	private Log log = LogFactory.getLog(this.getClass());
 	
 	/**  
 	* @Name: menuHome
@@ -77,10 +84,14 @@ public class ElecMenuAction extends BaseAction<MenuForm> {
 	* @Return: String：跳转到menu/alermStation.jsp
 	*/
 	public String alermStation(){
-		//1：查询数据库运行监控表的数据，返回惟一ElecCommonMsg
-		/*ElecCommonMsg commonMsg = elecCommonMsgService.findCommonMsg();
-		//2：将ElecCommonMsg对象压入栈顶，支持表单回显
-		ValueUtils.putValueStack(commonMsg);*/
+		ElecCommonMsg commonMsg = null;
+		try {
+			commonMsg = elecCommonMsgService.findCommonMsgs();
+		} catch (Exception e) {
+			log.error(e.getMessage(),e);
+			e.printStackTrace();
+		}
+		ValueUtils.push(commonMsg);
 		return "alermStation";
 	}
 
@@ -91,9 +102,15 @@ public class ElecMenuAction extends BaseAction<MenuForm> {
 	*/
 	public String alermDevice(){
 		//1：查询数据库运行监控表的数据，返回惟一ElecCommonMsg
-		/*ElecCommonMsg commonMsg = elecCommonMsgService.findCommonMsg();
+		ElecCommonMsg commonMsg = null;
+		try {
+			commonMsg = elecCommonMsgService.findCommonMsgs();
+		} catch (Exception e) {
+			log.error(e.getMessage(),e);
+			e.printStackTrace();
+		}
 		//2：将ElecCommonMsg对象压入栈顶，支持表单回显
-		ValueUtils.putValueStack(commonMsg);*/
+		ValueUtils.push(commonMsg);
 		return "alermDevice";
 	}
 	
