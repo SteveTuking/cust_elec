@@ -1,12 +1,17 @@
 package cn.cust.elec.dao.impl;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import cn.cust.elec.dao.ICommonDao;
@@ -75,15 +80,15 @@ public class CommonDaoImpl<T> extends HibernateDaoSupport implements ICommonDao<
 		/**方案一*/
 		List<T> list = this.getHibernateTemplate().find(finalHql, params);
 		/**方案二*/
-//		SessionFactory sf = this.getHibernateTemplate().getSessionFactory();
-//		Session s = sf.getCurrentSession();//Session与线程绑定
-//		Query query = s.createQuery(finalHql);
-//		if(params!=null && params.length>0){
-//			for(int i=0;i<params.length;i++){
-//				query.setParameter(i, params[i]);
-//			}
-//		}
-//		List<T> list = query.list();
+		/*SessionFactory sf = this.getHibernateTemplate().getSessionFactory();
+		Session s = sf.getCurrentSession();//Session与线程绑定
+		Query query = s.createQuery(finalHql);
+		if(params!=null && params.length>0){
+			for(int i=0;i<params.length;i++){
+				query.setParameter(i, params[i]);
+			}
+		}
+        List<T> list = query.list();*/
 		/**方案三*/
 		/*@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<T> list = this.getHibernateTemplate().execute(new HibernateCallback() {

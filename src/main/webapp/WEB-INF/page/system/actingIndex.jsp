@@ -1,7 +1,5 @@
-
-
 <%@ page language="java" pageEncoding="UTF-8"%>
-
+<%@taglib uri="/struts-tags" prefix="s" %>
 <html>
 <head>
 <title>运行监控模块编辑</title>
@@ -78,16 +76,27 @@
 							<tr onmouseover="this.style.backgroundColor = 'white'" onmouseout="this.style.backgroundColor = '#F5FAFE';">
 								<td style="HEIGHT:22px" align="center" width="40%">
 									<div class="scrollStyle" align="left" onmouseover="showInfoWithPanel(this)" onmouseout="hiddenInfoPanel(this)" style="table-layout:fixed;">
-										9点站点运行正常
+										<s:property value="stationRun"/>
 									</div>
 								</td>
 								<td style="HEIGHT:22px" align="center" width="40%">
-									<div class="scrollStyle" align="left" onmouseover="showInfoWithPanel(this)" onmouseout="hiddenInfoPanel(this)" style="table-layout:fixed;">
-										9点设备运行正常xcvcxvxcv设备运行正常xcvcxvxcv设备运行正常xcvcxvxcv设备运行正常xcvcxvxcv设备运行正常xcvcxvxcv设备运行正常xcvcxvxcv设备运行正常xcvcxvxcv设备运行正常xcvcxvxcv设备运行正常xcvcxvxcv设备运行正常xcvcxvxcv
+									<div>
+										<a style="CURSOR:hand" href="${pageContext.request.contextPath }/system/elecCommonMsgAction_actingView.do?" onclick="return hs.htmlExpand(this, { contentId: 'highslide-html-1', objectType: 'ajax', preserveContent: true} )">
+											<div class="scrollStyle" align="left" style="table-layout:fixed;">
+												查看设备详细信息
+											</div>
+										</a>
+										<div class="highslide-html-content" id="highslide-html-1" style="width: 700px">
+										<div class="highslide-move" style="border: 0; height: 18px; padding: 2px; cursor: default">
+											<a href="#" onClick="return hs.close(this)" class="control">[关 闭]</a>
+										</div>
+										<div class="highslide-body"></div>
+										</div>
 									</div>
+									
 								</td>
 								<td style="HEIGHT:22px" align="center" width="20%">
-									2010-08-08 12:55:55 
+									<s:date name="createDate" format="yyyy-MM-dd HH:mm:ss"/>
 								</td>
 							</tr>
 							
