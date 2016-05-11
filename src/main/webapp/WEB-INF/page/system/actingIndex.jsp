@@ -124,18 +124,8 @@
 									</div>
 								</td>
 								<td style="HEIGHT:22px" align="center" width="40%">
-									<div>
-										<a style="CURSOR:hand" href="${pageContext.request.contextPath }/system/elecCommonMsgAction_actingView.do?" onclick="return hs.htmlExpand(this, { contentId: 'highslide-html-1', objectType: 'ajax', preserveContent: true} )">
-											<div class="scrollStyle" align="left" style="table-layout:fixed;">
-												查看设备详细信息
-											</div>
-										</a>
-										<div class="highslide-html-content" id="highslide-html-1" style="width: 700px">
-										<div class="highslide-move" style="border: 0; height: 18px; padding: 2px; cursor: default">
-											<a href="#" onClick="return hs.close(this)" class="control">[关 闭]</a>
-										</div>
-										<div class="highslide-body"></div>
-										</div>
+									<div class="scrollStyle" align="left" onmouseover="showInfoWithPanel(this)" onmouseout="hiddenInfoPanel(this)" style="table-layout:fixed;">
+										<s:property value="devRun"/>
 									</div>
 									
 								</td>
