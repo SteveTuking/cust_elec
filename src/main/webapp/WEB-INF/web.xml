@@ -7,7 +7,8 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>StrutsPrepareAndExecuteFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>*.do</url-pattern>
+		<url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
 	<!--  * 监听器，web容器启动spring -->
 	<context-param>
