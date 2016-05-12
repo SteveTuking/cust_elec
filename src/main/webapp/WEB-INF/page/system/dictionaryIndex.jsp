@@ -1,6 +1,5 @@
-
 <%@ page language="java"  pageEncoding="UTF-8"%>
-
+<%@taglib uri="/struts-tags" prefix="s"%>
 <HTML>
 	<HEAD>
 		<title>系统设置</title>		
@@ -22,7 +21,7 @@
 		     document.getElementById("newddlText").innerHTML=textStr;
 		     
 		     
-		     Pub.submitActionWithForm('Form2','${pageContext.request.contextPath }/system/dictionaryEdit.jsp','Form1');
+		     Pub.submitActionWithForm('Form2','${pageContext.request.contextPath }/system/elecSystemDDLAction_edit.do','Form1');
 		    
 		  }else{
 		    
@@ -30,12 +29,22 @@
 		    document.getElementById("newtypename").innerHTML="";
 		    document.getElementById("newddlText").innerHTML=textStr;
 		     
-		    Pub.submitActionWithForm('Form2','${pageContext.request.contextPath }/system/dictionaryEdit.jsp','Form1');
+		    /**
+		    	* 参数一：传递dictionaryIndex.jsp的From2的表单
+		    	* 参数二：传递URL路径地址
+		    	* 参数三：传递dictionaryIndex.jsp的From1的表单
+		    	
+		    	原理：使用Ajax
+		    	* 传递dictionaryIndex.jsp中表单Form1中的所有元素作为参数，传递给服务器，并在服务器进行处理
+		    	* 将处理后的结果放置到dictionaryEdit.jsp中
+		    	* 将dictionaryEdit.jsp页面的全部内容放置到dictionaryIndex.jsp表单Form2中
+		    */
+		    Pub.submitActionWithForm('Form2','${pageContext.request.contextPath }/system/elecSystemDDLAction_edit.do','Form1');
 		  }  
 	   }
 	   
      function saveDict(){
-	      
+	      /**没有选择类型*/
 	      if(document.Form1.keyword.value=="jerrynew"){
 	          if(Trim(document.Form1.keywordname.value)==""){
 	             alert("请输入类型名称");
@@ -56,7 +65,9 @@
 	          document.Form2.keywordname.value=document.Form1.keywordname.value;
 	          document.Form2.typeflag.value="new";
 	          
-	      }else{
+	      }
+	      /**选择类型*/
+	      else{
 	      
 	          document.Form2.keywordname.value=document.Form1.keyword.value;
 	          document.Form2.typeflag.value="add";	
@@ -82,7 +93,7 @@
 		        }	
 		    }
 		  }
-	      document.Form2.action="savedict.do";
+	      document.Form2.action="${pageContext.request.contextPath }/system/elecSystemDDLAction_save.do";
 	      document.Form2.submit();     
 	}    
   
@@ -193,34 +204,19 @@ function delTableRow(rowNum){
 				<tr>
 					<td class="ta_01" align="right" width="35%" >类型列表：</td>
 					<td class="ta_01" align="left"  width="30%" >
-						<select name="keyword" class="bg" style="width:180px" onchange="changetype()">
-						 <option value="jerrynew"></option>
-						 
-						 <option value="故障类型">故障类型</option>
-						 
-						 <option value="建筑类型">建筑类型</option>
-						 
-						 <option value="角色类型">角色类型</option>
-						 
-						 <option value="设备类型">设备类型</option>
-						 
-						 <option value="设备状态">设备状态</option>
-						 
-						 <option value="性别">性别</option>
-						 
-						 <option value="所属单位">所属单位</option>
-						 
-						 <option value="是否在职">是否在职</option>
-						 
-						 <option value="图纸类别">图纸类别</option>
-						 
-						 <option value="项目级别">项目级别</option>
-						 
-						 <option value="项目类型">项目类型</option>
-						 
-						 <option value="站点类别">站点类别</option>
-						 
-						</select>
+					<!-- 
+					<select name="keyword" class="bg" style="width:180px" onchange="changetype()">
+						<option value="jerrynew"></option>
+						<s:iterator value="#request.list" var="sys">
+							<option value="<s:property value="#sys.keyword"/>"><s:property value="keyword"/></option>
+						</s:iterator>
+					</select>
+					 -->
+					<s:select list="#request.list" id="keyword" name="keyword" 
+							  listKey="keyword" listValue="keyword"
+							  headerKey="jerrynew" headerValue=""
+					          cssClass="bg" cssStyle="width:180px" onchange="changetype()">
+					</s:select>
 					</td>
 						
 					 <td class="ta_01"  align="right" width="35%" >					 	    
