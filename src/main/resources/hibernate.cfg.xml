@@ -20,5 +20,7 @@
 		<mapping resource="cn/cust/elec/domain/ElecCommonMsg.hbm.xml"/>
 		<mapping resource="cn/cust/elec/domain/ElecCommonMsgContent.hbm.xml"/>
 		<mapping resource="cn/cust/elec/domain/ElecSystemDDL.hbm.xml"/>
+		<mapping resource="cn/cust/elec/domain/ElecUser.hbm.xml"/>
+		<mapping resource="cn/cust/elec/domain/ElecUserFile.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>

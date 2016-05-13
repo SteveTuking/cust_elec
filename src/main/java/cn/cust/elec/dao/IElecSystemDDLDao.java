@@ -8,4 +8,6 @@ public interface IElecSystemDDLDao extends ICommonDao<ElecSystemDDL> {
 
 	public List<ElecSystemDDL> findElecSystemDDLsDistinct() throws Exception;
 
+	public String findDdlNameByKeywordAndDdlCode(String string, String sexID);
+
 }
