@@ -9,9 +9,15 @@
 	<constant name="struts.ui.theme" value="simple"></constant>
 	<!-- 修改struts2的后缀 改成.do-->
 	<constant name="struts.action.extension" value="do"></constant>
+	<!-- 改变struts2上传文件的大小 -->
+	<constant name="struts.multipart.maxSize" value="20097152"></constant>
 	
 	<!-- 系统管理 -->
 	<package name="system" namespace="/system" extends="json-default">
+		<!-- 全局转发 -->
+		<global-results>
+			<result name="close">/close.jsp</result>
+		</global-results>
 		<!-- 测试 -->
 		<action name="elecTextAction_*" class="elecTextAction" method="{1}">
 			<result name="save">/system/textAdd.jsp</result>
@@ -29,6 +35,7 @@
 			<result name="alermStation">/WEB-INF/page/menu/alermStation.jsp</result>
 			<result name="alermDevice">/WEB-INF/page/menu/alermDevice.jsp</result>
 		</action>
+		<!-- 运行监控 -->
 		<action name="elecCommonMsgAction_*" class="elecCommonMsgAction" method="{1}">
 			<result name="home">/WEB-INF/page/system/actingIndex.jsp</result>
 			<result name="save" type="redirectAction">
@@ -53,13 +60,13 @@
 				<param name="includeProperties">\[\d+\]\.ddlCode,\[\d+\]\.ddlName</param>
 			</result>
 			<result name="checkUser" type="json">
-				root表示，root指定message就表示查找栈顶中是否有message属性，如果有直接通过message的get方法，获取值放置到栈顶
+				<!-- root表示，root指定message就表示查找栈顶中是否有message属性，如果有直接通过message的get方法，获取值放置到栈顶 -->
 				<param name="root">message</param>
 				<param name="includeProperties">message</param>
 			</result>
 			<result name="edit">/WEB-INF/page/system/userEdit.jsp</result>
 			<result name="download" type="stream">
-				<param name="contentType">image/jpeg</param>
+				<!-- <param name="contentType">image/jpeg</param> -->
 			    <param name="inputName">inputStream</param>
 			    <param name="contentDisposition">attachment;filename="${#request.filename}"</param>
 			    <param name="bufferSize">1024</param>

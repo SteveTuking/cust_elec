@@ -10,4 +10,6 @@ public interface IElecUserService {
 
 	public String checkUser(String logonName) throws Exception;
 
+	public void saveUser(ElecUser elecUser) throws Exception;
+
 }

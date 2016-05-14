@@ -91,5 +91,14 @@ public class ElecUserAction extends BaseAction<ElecUser> {
 		//ValueUtils.putValueStack(message);//栈顶对象是String类型的属性
 		return "checkUser";
 	}
+	public String save(){
+		try {
+			elecUserService.saveUser(elecUser);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			e.printStackTrace();
+		}
+		return "close";
+	}
 	
 }
