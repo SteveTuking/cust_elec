@@ -362,7 +362,7 @@
      <tr>
          <td align="center" bgColor="#f5fafe" class="ta_01">登&nbsp;&nbsp;录&nbsp;&nbsp;名：<font color="#FF0000">*</font></td>
          <td class="ta_01" bgColor="#ffffff">
-         	<s:textfield name="logonName" maxlength="25" id="logonName" size="20" readonly="true"></s:textfield>
+         	<s:textfield name="logonName" maxlength="25" id="logonName" size="20" readonly="true" read-only="true"></s:textfield>
          	<div id="check"></div>
          </td>
          <td width="18%" align="center" bgColor="#f5fafe" class="ta_01">用户姓名：<font color="#FF0000">*</font></td>
