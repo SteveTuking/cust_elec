@@ -179,4 +179,14 @@ public class ElecUserServiceImpl implements IElecUserService {
 		
 	}
 
+	public ElecUser findUserListByUserID(String userID) throws Exception {
+		ElecUser elecUser = elecUserDao.findObjectByID(userID);
+		return elecUser;
+	}
+
+	public ElecUserFile findUserFileByID(String fileID) throws Exception {
+		ElecUserFile elecUserFile = this.elecUserFileDao.findObjectByID(fileID);
+		return elecUserFile;
+	}
+
 }

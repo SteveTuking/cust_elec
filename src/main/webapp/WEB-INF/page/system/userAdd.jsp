@@ -1,31 +1,29 @@
-
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@taglib uri="/struts-tags" prefix="s" %>
-
 <html>
   <head>
-   <title>添加用户</title>
+   <title>
+   <s:if test="viewflag==null">
+   	编辑用户
+   </s:if>
+   <s:else>
+   	查看用户明细
+   </s:else>
+   </title>
    <LINK href="${pageContext.request.contextPath }/css/Style.css" type="text/css" rel="stylesheet">
    <script language="javascript" src="${pageContext.request.contextPath }/script/function.js"></script>
-   <script type="text/javascript" src="${pageContext.request.contextPath}/My97DatePicker/WdatePicker.js"></script>
    <script type="text/javascript" src="${pageContext.request.contextPath }/script/validate.js"></script>
+   <script type="text/javascript" src="${pageContext.request.contextPath}/My97DatePicker/WdatePicker.js"></script>
    <script language="javascript" src="${pageContext.request.contextPath }/script/showText.js"></script>
    <script language="javascript" src="${pageContext.request.contextPath }/script/limitedTextarea.js"></script>
    <script language="javascript" src="${pageContext.request.contextPath }/script/jquery-1.4.2.js"></script>
-   
-<Script language="javascript">
-
-	/**Dom对象的操作*/
+   <Script language="javascript">
+    /**DOM对象*/
 	/**function check_null(){
+	
+		var theForm=document.Form1;
 	    
-	     var theForm=document.Form1;
-	    
-	    if(Trim(theForm.logonName.value)=="")
-		{
-			alert("登录名不能为空");
-			theForm.logonName.focus();
-			return false;
-		}
+	  
 	    if(Trim(theForm.userName.value)=="")
 		{
 			alert("用户姓名不能为空");
@@ -94,6 +92,7 @@
 			theForm.remark.focus();
 			return false; 
        }
+	   //如果是否在职选择是，则入职时间必须要填写，如果是否在职选择否，则离职日期必须要填写
 	   var isDutySelect = document.getElementById("isDuty");
 	   //选择[是]
 	   if(isDutySelect.options[0].selected){
@@ -104,10 +103,12 @@
 		   }
 	   }
 	   //选择[否]
-	   if(isDutySelect.options[1].selected){
-		   alert("不允许新增用户操作，选择离职！");
-		   theForm.isDuty.focus();
-		   return false;
+	   else{
+		   if(theForm.offDutyDate.value==""){
+			   alert("该用户属于离职人员，请填写离职时间");
+			   theForm.offDutyDate.focus();
+			   return false; 
+		   }
 	   }
 	   //上传的文件不能为空
 	   var tbl=document.getElementById("filesTbl");
@@ -118,18 +119,13 @@
    	  		   return false;
    	  	   }
    	   }
-	   document.Form1.action="saveUser.do";
+	   document.Form1.action="editUser.do";
 	   document.Form1.submit();
+	  	
 	}
-	*/
-	/**jquery对象*/
-	function check_null(){
-	    if($.trim($("input[name='logonName']").val())=="")
-		{
-			alert("登录名不能为空");
-			$("input[name='logonName']")[0].focus();
-			return false;
-		}
+    */
+    /**jquery对象*/
+    function check_null(){
 	    if($.trim($("input[name='userName']").val())=="")
 		{
 			alert("用户姓名不能为空");
@@ -176,19 +172,20 @@
  			   alert("该用户属于在职人员，请填写入职时间");
  			   $("input[name='onDutyDate']")[0].focus();
  			   return false; 
- 		   	}
+ 		   }
        	} 
-       //选择[否]
-       if($("#isDuty option:nth-child(2)").is(":selected")){
-    	   alert("不允许新增用户操作，选择离职！");
-    	   $("select[name='isDuty']")[0].focus();
- 		   return false;
-       }
-       
- 	   //上传的文件不能为空
- 	   var $tbl=$("#filesTbl tr");
-       var flag = false;
- 	   $tbl.each(function(index,domEle){
+        //选择[否]
+        if($("#isDuty option:nth-child(2)").is(":selected")){
+        	if($.trim($("input[name='offDutyDate']").val())==""){
+        		alert("该用户属于离职人员，请填写离职时间！");
+        	    $("input[name='offDutyDate']")[0].focus();
+     		    return false;
+        	}
+        }
+ 	    //上传的文件不能为空
+ 	    var $tbl=$("#filesTbl tr");
+        var flag = false;
+ 	    $tbl.each(function(index,domEle){
  		   //去掉表头
  		   if(index==0){
  			   return true;//相当于continue
@@ -202,15 +199,15 @@
  				  return false;//相当于break
  			   }
  		   }
- 	   })
- 	   //说明附件存在错误
- 	   if(flag){
+ 	    })
+ 	    //说明附件存在错误
+ 	    if(flag){
  		   return false;
- 	   }
+ 	    }
       
-	   /**正则表达式的使用*/	
-       var theForm=document.Form1;
-       if(checkNull(theForm.contactTel)){
+	    /**正则表达式的使用*/	
+        var theForm=document.Form1;
+        if(checkNull(theForm.contactTel)){
            if(!checkPhone(theForm.contactTel.value))
   		  {
   			alert("请输入正确的电话号码");
@@ -237,8 +234,8 @@
   		 }
   	   }
   		
-  	   $("#Form1").attr("action","${pageContext.request.contextPath }/system/elecUserAction_save.do");
-	   $("#Form1").submit();
+  	   $("form:first").attr("action","${pageContext.request.contextPath }/system/elecUserAction_save.do");
+	   $("form:first").submit();
 	}
 	function checkTextAreaLen(){
   		var remark = new Bs_LimitedTextarea('remark', 250); 
@@ -248,6 +245,19 @@
     window.onload=function(){
 		checkTextAreaLen();
     }
+    
+    /**如果选择离职时间，则【是否在职】默认选择"否"，如果没有选择离职时间，则【是否在职】默认选择"是"*/
+    function checkIsDuty(o){   
+ 	   var offDutyDate = o.value;
+ 	   var isDutySelect = document.getElementById("isDuty");
+ 	   if(offDutyDate!=""){
+ 		   isDutySelect.options[1].selected = true; //否
+ 	   }
+ 	   else{
+ 		   isDutySelect.options[0].selected = true; //是
+ 	   }
+    }
+    
     //ajax的二级联动，使用选择的所属单位，查询该所属单位下对应的单位名称列表
     function findJctUnit(o){
     	//货物所属单位的文本内容
@@ -268,32 +278,6 @@
 	        }
         });
     	
-    }
-    
-    /**校验登录名是否出现重复*/
-    function checkUser(o){
-    	//alert(o.value);//dom的写法
-    	//alert($(o).val());//jquery的写法
-    	var logonName = $(o).val();
-    	//以登录名作为查询条件，查询该登录名是否在数据库表中存在记录
-    	$.post("elecUserAction_checkUser.do",{"logonName":logonName},function(data){
-    		//如果栈顶是模型驱动的对象，取值的时候应该使用data.message的方式
-    		//如果栈顶是模型驱动的对象的某个属性，取值的时候应该使用data即可
-    		if(data==1){
-				$("#check").html("<font color='red'>登录名不能为空</font>");
-				$(o)[0].focus();
-				$("#BT_Submit").attr("disabled","none");
-			}
-			else if(data==2){
-				$("#check").html("<font color='red'>登录名已经存在</font>");
-				$(o)[0].focus();
-				$("#BT_Submit").attr("disabled","none");
-			}
-			else{
-				$("#check").html("<font color='green'>登录名可以使用</font>");
-				$("#BT_Submit").attr("disabled","");
-			}
-    	});
     }
     function fileTr(){
     	var value = $("#BT_File").val();
@@ -349,24 +333,36 @@
           }
        }
     } 
-   </script>
-  </head>
+	
+</script>
+</head>
+
   
  <body>
- 
-  <form name="Form1" id="Form1" method="post" enctype="multipart/form-data">
- <br>
+    <form name="Form1" method="post" enctype="multipart/form-data">	
+    <br>
+    <s:hidden name="userID"></s:hidden>
+    <s:hidden name="password" value="%{logonPwd}"></s:hidden>
+    <s:hidden name="roleflag"></s:hidden>
     <table cellSpacing="1" cellPadding="5" width="680" align="center" bgColor="#eeeeee" style="border:1px solid #8ba7e3" border="0">
 
-    <tr>
+	 <tr>
 		<td class="ta_01" align="center" colSpan="4" background="${pageContext.request.contextPath }/images/b-info.gif">
-		 <font face="宋体" size="2"><strong>添加用户</strong></font>
+		 <font face="宋体" size="2"><strong>
+		 <s:if test="viewflag==null">
+		   	编辑用户
+		   </s:if>
+		   <s:else>
+		   	查看用户明细
+		   </s:else>
+		 </strong></font>
 		</td>
     </tr>
+       
      <tr>
          <td align="center" bgColor="#f5fafe" class="ta_01">登&nbsp;&nbsp;录&nbsp;&nbsp;名：<font color="#FF0000">*</font></td>
          <td class="ta_01" bgColor="#ffffff">
-         	<s:textfield name="logonName" maxlength="25" id="logonName" size="20" onblur="checkUser(this);"></s:textfield>
+         	<s:textfield name="logonName" maxlength="25" id="logonName" size="20" readonly="true"></s:textfield>
          	<div id="check"></div>
          </td>
          <td width="18%" align="center" bgColor="#f5fafe" class="ta_01">用户姓名：<font color="#FF0000">*</font></td>
@@ -404,24 +400,28 @@
 		</td>
 		<td align="center" bgColor="#f5fafe" class="ta_01">单位名称：<font color="#FF0000">*</font></td>
 		<td class="ta_01" bgColor="#ffffff">
-			<select id="jctUnitID" name="jctUnitID" style="width:155px"></select>
+			<s:select list="#request.jctUnitList" name="jctUnitID" id="jctUnitID"
+					  listKey="ddlCode" listValue="ddlName"
+					  cssStyle="width:155px">
+			</s:select>
 		</td>
 	</tr>
 	<tr>
 		<td align="center" bgColor="#f5fafe" class="ta_01">密码：</td>
 		<td class="ta_01" bgColor="#ffffff">
-			<s:password name="logonPwd" id="logonPwd" maxlength="25"  size="22"></s:password>
+			<s:password name="logonPwd" id="logonPwd" showPassword="true" maxlength="25"  size="22"></s:password>
 		</td>
 		<td align="center" bgColor="#f5fafe" class="ta_01">确认密码：</td>
 		<td class="ta_01" bgColor="#ffffff">
-			<s:password name="passwordconfirm" id="passwordconfirm" maxlength="25"  size="22"></s:password>
+			<s:password name="passwordconfirm" id="passwordconfirm" value="%{logonPwd}" showPassword="true" maxlength="25"  size="22"></s:password>
 		</td>
 	</tr>
 
 	<tr>
 		<td align="center" bgColor="#f5fafe" class="ta_01">出生日期：</td>
 		<td class="ta_01" bgColor="#ffffff">
-			<s:textfield name="birthday" id="birthday" maxlength="50"  size="20" onClick="WdatePicker()"></s:textfield>
+			<s:date name="birthday" format="yyyy-MM-dd" var="birthdayDate"/>
+			<s:textfield name="birthday" id="birthday" value="%{birthdayDate}" maxlength="50"  size="20" onClick="WdatePicker()"></s:textfield>
 		</td>
 		<td align="center" bgColor="#f5fafe" class="ta_01">联系地址：</td>
 		<td class="ta_01" bgColor="#ffffff">
@@ -449,7 +449,6 @@
 		<td class="ta_01" bgColor="#ffffff">
 			<s:select list="#request.isDutyList" name="isDuty" id="isDuty"
 					  listKey="ddlCode" listValue="ddlName"
-					  value="1"
 					  cssStyle="width:155px">
 			</s:select>
 		</td>
@@ -458,10 +457,13 @@
 	<tr>
 		<td align="center" bgColor="#f5fafe" class="ta_01">入职日期：<font color="#FF0000">*</font></td>
 		<td class="ta_01" bgColor="#ffffff">
-			<s:textfield name="onDutyDate" id="onDutyDate" maxlength="50" size="20" onClick="WdatePicker()"></s:textfield>
+			<s:date name="onDutyDate" format="yyyy-MM-dd" var="onDutyDateDate"/>
+			<s:textfield name="onDutyDate" id="onDutyDate" value="%{onDutyDateDate}" maxlength="50" size="20" onClick="WdatePicker()"></s:textfield>
 		</td>
-		<td align="center" bgColor="#ffffff" class="ta_01"></td>
+		<td align="center" bgColor="#f5fafe" class="ta_01">离职日期：</td>
 		<td class="ta_01" bgColor="#ffffff">
+			<s:date name="offDutyDate" format="yyyy-MM-dd" var="offDutyDateDate"/>
+			<s:textfield name="offDutyDate" id="offDutyDate" value="%{offDutyDateDate}" maxlength="50" size="20" onClick="WdatePicker()"></s:textfield>
 		</td>
 	</tr>
     
@@ -473,10 +475,26 @@
 	</TR>
 	
 	<TR>
+		<TD class="ta_01" align="center" bgColor="#f5fafe">附件（下载）：</TD>
+		<TD class="ta_01" bgColor="#ffffff" colSpan="3">
+			<s:if test="elecUserFiles!=null && elecUserFiles.size()>0">
+				<s:iterator value="elecUserFiles">
+					<a href="#" onclick="openWindow('${pageContext.request.contextPath }/system/elecUserAction_download.do?fileID=<s:property value="fileID"/>','700','400');">
+						<s:property value="fileName"/>
+					</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<s:date name="progressTime" format="yyyy-MM-dd HH:mm:ss"/>
+					<br>
+				</s:iterator>
+			</s:if>
+		</TD>
+	</TR>
+	<TR>
+	<s:if test="viewflag==null">
 	<td  align="center"  colSpan="4"  class="ta_01" style="WIDTH: 100%" align="left" bgColor="#f5fafe">
 		<input type="button" id="BT_File" name="BT_File" value="打开附件"  style="font-size:12px; color:black; height=22;width=55"   onClick="fileTr()">
 		<input type="button" id="item" name="item" value="添加选项" style="difont-size:12px; color:black; display: none;height=20;width=80 " onClick="insertRows()">
 	</td>
+	</s:if>
 	</TR>
 	
 	<TR id="trFile" style="display: none">
@@ -502,16 +520,21 @@
 	     </table>
 		</td>
 	</TR>
+	
 	<TR>
-	<td  align="center"  colSpan="4"  class="sep1"></td>
+		<td  align="center"  colSpan="4"  class="sep1"></td>
 	</TR>
+	
 	<tr>
 		<td class="ta_01" style="WIDTH: 100%" align="center" bgColor="#f5fafe" colSpan="4">
-		<input type="button" id="BT_Submit" name="BT_Submit" value="保存"  style="font-size:12px; color:black; height=22;width=55"   onClick="check_null()">
-		 <FONT face="宋体">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>
-		<input style="font-size:12px; color:black; height=22;width=55"  type="button" value="关闭"  name="Reset1"  onClick="window.close()">
-			
-		</td>
+			<s:if test="viewflag==null">
+				<input type="button" id="BT_Submit" name="BT_Submit" value="保存"  style="font-size:12px; color:black; height=22;width=55"  onClick="check_null()">
+			</s:if>
+		    <FONT face="宋体">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>
+		    <s:if test="roleflag==null">
+		    	<input style="font-size:12px; color:black; height=22;width=55" type="button" value="关闭"  name="Reset1"  onClick="window.close()">
+		    </s:if>
+	    </td>
 	</tr>
 </table>　
 </form>

@@ -1,15 +1,23 @@
 package cn.cust.elec.web.action;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import cn.cust.elec.domain.ElecSystemDDL;
 import cn.cust.elec.domain.ElecUser;
+import cn.cust.elec.domain.ElecUserFile;
 import cn.cust.elec.service.IElecSystemDDLService;
 import cn.cust.elec.service.IElecUserService;
 import cn.cust.elec.utils.ValueUtils;
@@ -22,6 +30,7 @@ public class ElecUserAction extends BaseAction<ElecUser> {
 	private IElecUserService elecUserService;
 	@Autowired
 	private IElecSystemDDLService elecSystemDDLService;
+	
 	private Log log = LogFactory.getLog(this.getClass());
 	
 	ElecUser elecUser = this.getModel();
@@ -100,5 +109,37 @@ public class ElecUserAction extends BaseAction<ElecUser> {
 		}
 		return "close";
 	}
+	//边界
+	public String edit(){
+		try {
+			ElecUser elecUser = elecUserService.findUserListByUserID(this.elecUser.getUserID());
+			ValueUtils.push(elecUser);
+			initSystemDDL();
+			String ddlCode = elecUser.getJctID();
+			//(2)使用所属单位和数据项的编号，获取数据项的值
+			String ddlName = elecSystemDDLService.findDdlNameByKeywordAndDdlCode("所属单位",ddlCode);
+			//(3)使用查询的数据项的值，作为数据类型，查询该数据类型的对应的集合，返回List<ElecSystemDDL>
+			List<ElecSystemDDL> jctUnitList = elecSystemDDLService.findSystemDDLListByKeyword(ddlName);
+			request.setAttribute("jctUnitList", jctUnitList);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			e.printStackTrace();
+		}
+		return "edit";
+	}
 	
+	public String download(){
+		try {
+			ElecUserFile elecUserFile = elecUserService.findUserFileByID(this.elecUser.getFileID());
+			String path = ServletActionContext.getServletContext().getRealPath("")+elecUserFile.getFileURL();
+			response.setHeader("Content-disposition", "attachment;filename="+/*URLEncoder.encode(elecUserFile.getFileName(), "UTF-8")*/new String(elecUserFile.getFileName().getBytes("gbk"),"ISO8859-1"));
+			InputStream fileIS = new FileInputStream(new File(path));
+			ServletOutputStream fileOS = response.getOutputStream();
+			IOUtils.copyLarge(fileIS, fileOS);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			e.printStackTrace();
+		}
+		return NONE;
+	}
 }

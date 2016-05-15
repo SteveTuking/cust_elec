@@ -76,4 +76,8 @@ public class ElecSystemDDLServcieImpl implements IElecSystemDDLService {
 				}
 			}
 		}
+
+		public String findDdlNameByKeywordAndDdlCode(String keyword, String ddlCode) {
+			return elecSystemDDLDao.findDdlNameByKeywordAndDdlCode(keyword, ddlCode);
+		}
 }

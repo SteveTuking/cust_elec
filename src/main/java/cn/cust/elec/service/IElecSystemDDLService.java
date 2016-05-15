@@ -12,4 +12,6 @@ public interface IElecSystemDDLService {
 
 	public void saveSystemDDL(ElecSystemDDL elecSystemDDL) throws Exception;
 
+	public String findDdlNameByKeywordAndDdlCode(String keyword, String ddlCode);
+
 }
