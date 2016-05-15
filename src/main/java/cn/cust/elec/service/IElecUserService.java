@@ -17,4 +17,6 @@ public interface IElecUserService {
 
 	public ElecUserFile findUserFileByID(String fileID) throws Exception;
 
+	public void deleteByUserID(String userID) throws Exception;
+
 }

@@ -6,10 +6,14 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.cust.elec.dao.IElecSystemDDLDao;
@@ -187,6 +191,39 @@ public class ElecUserServiceImpl implements IElecUserService {
 	public ElecUserFile findUserFileByID(String fileID) throws Exception {
 		ElecUserFile elecUserFile = this.elecUserFileDao.findObjectByID(fileID);
 		return elecUserFile;
+	}
+
+	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRED,readOnly=false)
+	public void deleteByUserID(String userID) throws Exception {
+		String [] userIDs = userID.split(", ");
+		if(userIDs!=null && userIDs.length>0){
+			//获取每个用户ID
+			for(String uid:userIDs){
+				//使用用户ID，查询用户对象，获取当前用户具有的附件
+				ElecUser user = elecUserDao.findObjectByID(uid);
+				Set<ElecUserFile> elecUserFiles = user.getElecUserFiles();
+				//遍历用户的附件
+				if(elecUserFiles!=null && elecUserFiles.size()>0){
+					for(ElecUserFile elecUserFile:elecUserFiles){
+						//1：删除该用户对应的文件
+						//获取路径
+						String path = ServletActionContext.getServletContext().getRealPath("")+elecUserFile.getFileURL();
+						File file = new File(path);
+						if(file.exists()){
+							//删除文件
+							file.delete();
+						}
+						//删除每个用户的附件
+						//2：删除该用户对应的用户附件表数据(级联删除)
+						elecUserFileDao.deleteObjectByIds(elecUserFile.getFileID());
+						//<set name="elecUserFiles" table="Elec_User_File" inverse="true" order-by="progressTime desc" cascade="delete">
+					}
+				}
+			}
+		}
+		
+		//3：删除用户表的信息
+		elecUserDao.deleteObjectByIds(userIDs);
 	}
 
 }

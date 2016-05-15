@@ -142,4 +142,14 @@ public class ElecUserAction extends BaseAction<ElecUser> {
 		}
 		return NONE;
 	}
+	
+	public String delete(){
+		try {
+			elecUserService.deleteByUserID(this.elecUser.getUserID());
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			e.printStackTrace();
+		}
+		return "delete";
+	}
 }
