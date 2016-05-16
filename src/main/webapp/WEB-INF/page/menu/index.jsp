@@ -35,7 +35,7 @@ FORM {
 	MARGIN: 0px; BACKGROUND-COLOR: #ffffff
 } 
 </STYLE>
-<title>国家电力监测中心</title>
+<title>电力安全风险管理系统</title>
 </head>
 <body onload="ini()">
 <form action="${pageContext.request.contextPath}/system/elecMenuAction_menuHome.do" method="post" target="_top">
