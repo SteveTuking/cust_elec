@@ -22,5 +22,8 @@
 		<mapping resource="cn/cust/elec/domain/ElecSystemDDL.hbm.xml"/>
 		<mapping resource="cn/cust/elec/domain/ElecUser.hbm.xml"/>
 		<mapping resource="cn/cust/elec/domain/ElecUserFile.hbm.xml"/>
+		<mapping resource="cn/cust/elec/domain/ElecRole.hbm.xml"/>
+		<mapping resource="cn/cust/elec/domain/ElecPopedom.hbm.xml"/>
+		<mapping resource="cn/cust/elec/domain/ElecRolePopedom.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>
