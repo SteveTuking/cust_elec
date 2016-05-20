@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.cust.elec.dao.IElecSystemDDLDao;
 import cn.cust.elec.domain.ElecSystemDDL;
@@ -39,6 +40,7 @@ public class ElecSystemDDLServcieImpl implements IElecSystemDDLService {
 		return list;
 	}
 
+	@Transactional
 	public void saveSystemDDL(ElecSystemDDL elecSystemDDL) throws Exception {
 		// 1：获取页面传递的参数
 		// 数据类型
