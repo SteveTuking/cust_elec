@@ -14,115 +14,6 @@
    <script language="javascript" src="${pageContext.request.contextPath }/script/jquery-1.4.2.js"></script>
    
 <Script language="javascript">
-
-	/**Dom对象的操作*/
-	/**function check_null(){
-	    
-	     var theForm=document.Form1;
-	    
-	    if(Trim(theForm.logonName.value)=="")
-		{
-			alert("登录名不能为空");
-			theForm.logonName.focus();
-			return false;
-		}
-	    if(Trim(theForm.userName.value)=="")
-		{
-			alert("用户姓名不能为空");
-			theForm.userName.focus();
-			return false;
-		}
-		if(theForm.sexID.value=="")
-		{
-			alert("请选择性别");
-			theForm.sexID.focus();
-			return false;
-		}
-	    if(theForm.jctID.value=="")
-		{
-			alert("请选择所属单位");
-			theForm.jctID.focus();
-			return false;
-		}
-	    if(Trim(theForm.onDutyDate.value)=="")
-		{
-			alert("入职时间不能为空");
-			theForm.onDutyDate.focus();
-			return false;
-		}
-	    if(theForm.postID.value=="")
-		{
-			alert("请选择职位");
-			theForm.postID.focus();
-			return false;
-		}
-        if(theForm.logonPwd.value!=theForm.passwordconfirm.value){
-		
-		  alert("两次输入密码不一致，请重新输入");
-		  return;
-		}
-		if(checkNull(theForm.contactTel)){
-         if(!checkPhone(theForm.contactTel.value))
-		  {
-			alert("请输入正确的电话号码");
-			theForm.contactTel.focus();
-			return false;
-		  }
-		}
-		
-	    if(checkNull(theForm.mobile)){
-         if(!checkMobilPhone(theForm.mobile.value))
-		  {
-			alert("请输入正确的手机号码");
-			theForm.mobile.focus();
-			return false;
-		  }
-		}
-		
-	   if(checkNull(theForm.email))	{
-         if(!checkEmail(theForm.email.value))
-		 {
-			alert("请输入正确的EMail");
-			theForm.email.focus();
-			return false;
-		 }
-	   }
-		
-	   if(theForm.remark.value.length>250){
-     
-        	alert("备注字符长度不能超过250");
-			theForm.remark.focus();
-			return false; 
-       }
-	   var isDutySelect = document.getElementById("isDuty");
-	   //选择[是]
-	   if(isDutySelect.options[0].selected){
-		   if(theForm.onDutyDate.value==""){
-			   alert("该用户属于在职人员，请填写入职时间");
-			   theForm.onDutyDate.focus();
-			   return false; 
-		   }
-	   }
-	   //选择[否]
-	   if(isDutySelect.options[1].selected){
-		   alert("不允许新增用户操作，选择离职！");
-		   theForm.isDuty.focus();
-		   return false;
-	   }
-	   //上传的文件不能为空
-	   var tbl=document.getElementById("filesTbl");
-       for (i=1;i<tbl.rows.length;i++){
-   	  	   var filePath = tbl.rows[i].cells[1].getElementsByTagName("input")[0].value;
-   	  	   if(filePath == ""){
-   	  		   alert("请选择第"+ i +"行的文件路径！");
-   	  		   return false;
-   	  	   }
-   	   }
-	   document.Form1.action="saveUser.do";
-	   document.Form1.submit();
-	}
-	*/
-	/**jquery对象*/
 	function check_null(){
 	    if($.trim($("input[name='logonName']").val())=="")
 		{
@@ -360,115 +251,40 @@
 
     <tr>
 		<td class="ta_01" align="center" colSpan="4" background="${pageContext.request.contextPath }/images/b-info.gif">
-		 <font face="宋体" size="2"><strong>添加用户</strong></font>
+		 <font face="宋体" size="2"><strong>记录风险</strong></font>
 		</td>
     </tr>
      <tr>
-         <td align="center" bgColor="#f5fafe" class="ta_01">登&nbsp;&nbsp;录&nbsp;&nbsp;名：<font color="#FF0000">*</font></td>
-         <td class="ta_01" bgColor="#ffffff">
-         	<s:textfield name="logonName" maxlength="25" id="logonName" size="20" onblur="checkUser(this);"></s:textfield>
-         	<div id="check"></div>
-         </td>
-         <td width="18%" align="center" bgColor="#f5fafe" class="ta_01">用户姓名：<font color="#FF0000">*</font></td>
-         <td class="ta_01" bgColor="#ffffff">
-         	<s:textfield name="userName" maxlength="25" id="userName" size="20"></s:textfield>
-         </td>
+    	<td align="center" bgColor="#f5fafe" class="ta_01">事故级别：<font color="#FF0000">*</font></td>
+		<td class="ta_01" bgColor="#ffffff">
+			<s:select list="#request.riskranks" name="riskrank" id="riskrank"
+					  listKey="ddlCode" listValue="ddlName"
+					  headerKey="" headerValue="请选择"
+					  cssStyle="width:155px">
+			</s:select>
+		</td>
     </tr>
-	<tr>
-		<td align="center" bgColor="#f5fafe" class="ta_01">性别：<font color="#FF0000">*</font></td>
+    <tr>
+    	<td align="center" bgColor="#f5fafe" class="ta_01">风险类别：<font color="#FF0000">*</font></td>
 		<td class="ta_01" bgColor="#ffffff">
-			<s:select list="#request.sexList" name="sexID" id="sexID"
+			<s:select list="#request.risktypes" name="risktype" id="risktype"
 					  listKey="ddlCode" listValue="ddlName"
 					  headerKey="" headerValue="请选择"
 					  cssStyle="width:155px">
 			</s:select>
 		</td>
-		<td align="center" bgColor="#f5fafe" class="ta_01">职位：<font color="#FF0000">*</font></td>
-		<td class="ta_01" bgColor="#ffffff">
-			<s:select list="#request.postList" name="postID" id="postID"
-					  listKey="ddlCode" listValue="ddlName"
-					  headerKey="" headerValue="请选择"
-					  cssStyle="width:155px">
-			</s:select>
-		</td>
-	</tr>
-	<tr>
-		<td align="center" bgColor="#f5fafe" class="ta_01">所属单位：<font color="#FF0000">*</font></td>
-		<td class="ta_01" bgColor="#ffffff">
-			<s:select list="#request.jctList" name="jctID" id="jctID"
-					  listKey="ddlCode" listValue="ddlName"
-					  headerKey="" headerValue="请选择"
-					  cssStyle="width:155px" onchange="findJctUnit(this)">
-			</s:select>
-			
-		</td>
-		<td align="center" bgColor="#f5fafe" class="ta_01">单位名称：<font color="#FF0000">*</font></td>
-		<td class="ta_01" bgColor="#ffffff">
-			<select id="jctUnitID" name="jctUnitID" style="width:155px"></select>
-		</td>
-	</tr>
-	<tr>
-		<td align="center" bgColor="#f5fafe" class="ta_01">密码：</td>
-		<td class="ta_01" bgColor="#ffffff">
-			<s:password name="logonPwd" id="logonPwd" maxlength="25"  size="22"></s:password>
-		</td>
-		<td align="center" bgColor="#f5fafe" class="ta_01">确认密码：</td>
-		<td class="ta_01" bgColor="#ffffff">
-			<s:password name="passwordconfirm" id="passwordconfirm" maxlength="25"  size="22"></s:password>
-		</td>
-	</tr>
+    </tr>
 
 	<tr>
-		<td align="center" bgColor="#f5fafe" class="ta_01">出生日期：</td>
+		<td align="center" bgColor="#f5fafe" class="ta_01">风险日期：</td>
 		<td class="ta_01" bgColor="#ffffff">
-			<s:textfield name="birthday" id="birthday" maxlength="50"  size="20" onClick="WdatePicker()"></s:textfield>
-		</td>
-		<td align="center" bgColor="#f5fafe" class="ta_01">联系地址：</td>
-		<td class="ta_01" bgColor="#ffffff">
-			<s:textfield name="address" maxlength="50"  size="20"></s:textfield>
+			<s:textfield name="riskdate" id="riskdate" maxlength="50"  size="20" onClick="WdatePicker()"></s:textfield>
 		</td>
 	</tr>
-
-	<tr>
-		<td align="center" bgColor="#f5fafe" class="ta_01">联系电话：</td>
-		<td class="ta_01" bgColor="#ffffff">
-			<s:textfield name="contactTel" maxlength="25"  size="20"></s:textfield>
-		</td>
-		<td align="center" bgColor="#f5fafe" class="ta_01">手机：</td>
-		<td class="ta_01" bgColor="#ffffff">
-			<s:textfield name="mobile" maxlength="25"  size="20"></s:textfield>
-		</td>
-	</tr>
-
-	<tr>
-		<td align="center" bgColor="#f5fafe" class="ta_01">电子邮箱：</td>
-		<td class="ta_01" bgColor="#ffffff">
-			<s:textfield name="email" maxlength="50"  size="20"></s:textfield>
-		</td>
-		<td align="center" bgColor="#f5fafe" class="ta_01">是否在职：</td>
-		<td class="ta_01" bgColor="#ffffff">
-			<s:select list="#request.isDutyList" name="isDuty" id="isDuty"
-					  listKey="ddlCode" listValue="ddlName"
-					  value="1"
-					  cssStyle="width:155px">
-			</s:select>
-		</td>
-	</tr>
-
-	<tr>
-		<td align="center" bgColor="#f5fafe" class="ta_01">入职日期：<font color="#FF0000">*</font></td>
-		<td class="ta_01" bgColor="#ffffff">
-			<s:textfield name="onDutyDate" id="onDutyDate" maxlength="50" size="20" onClick="WdatePicker()"></s:textfield>
-		</td>
-		<td align="center" bgColor="#ffffff" class="ta_01"></td>
-		<td class="ta_01" bgColor="#ffffff">
-		</td>
-	</tr>
-    
 	<TR>
-		<TD class="ta_01" align="center" bgColor="#f5fafe">备注：</TD>
+		<TD class="ta_01" align="center" bgColor="#f5fafe">描述：</TD>
 		<TD class="ta_01" bgColor="#ffffff" colSpan="3">
-			<s:textarea name="remark"  cssStyle="WIDTH:95%"  rows="4" cols="52"></s:textarea>
+			<s:textarea name="riskdetail"  cssStyle="WIDTH:95%"  rows="4" cols="52"></s:textarea>
 		</TD>
 	</TR>
 	

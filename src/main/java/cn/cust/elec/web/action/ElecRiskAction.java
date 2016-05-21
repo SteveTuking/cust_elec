@@ -43,6 +43,15 @@ public class ElecRiskAction extends BaseAction<ElecRisk> {
 	}
 	
 	public String add(){
+		try {
+			List<ElecSystemDDL> riskranks = elecSystemDDLService.findSystemDDLListByKeyword("事故级别");
+			List<ElecSystemDDL> risktypes = elecSystemDDLService.findSystemDDLListByKeyword("风险类别");
+			request.setAttribute("riskranks", riskranks);
+			request.setAttribute("risktypes", risktypes);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "add";
 	}
 }

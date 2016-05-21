@@ -29,7 +29,7 @@
    }
   //用户:全部选中/全部不选中
    function checkAllUser(user){
-	  var selectuser = document.getElementsByName("userID");
+	  var selectuser = document.getElementsByName("riskID");
       for(var i=0;i<selectuser.length;i++){
      	 selectuser[i].checked = user.checked;
       }
@@ -141,33 +141,6 @@
 								<td width="10%" align="center" height=22 background="${pageContext.request.contextPath }/images/tablehead.jpg">编辑</td>
 								<td width="10%" align="center" height=22 background="${pageContext.request.contextPath }/images/tablehead.jpg">查看</td>
 							</tr>
-							<%-- <tr onmouseover="this.style.backgroundColor = 'white'" onmouseout="this.style.backgroundColor = '#F5FAFE';">
-								<td style="HEIGHT:22px" align="center" width="5%">
-									<input type="checkbox" name="userID" id="userID" value="ff808081110677790111070ccffe0001">
-								</td>
-								<td style="HEIGHT:22px" align="center" width="15%">
-									小事故
-								</td>
-								<td style="HEIGHT:22px" align="center" width="15%">
-									违章操作
-								</td>	
-								<td style="HEIGHT:22px" align="center" width="15%">
-									2012-11-15
-								</td>								
-								<td style="HEIGHT:22px" align="center" width="8%">
-									由于人违章操作
-								</td>
-								
-								<td align="center" style="HEIGHT: 22px" align="center" width="10%">																	
-								   <a href="#" onclick="openWindow('userEdit.jsp?userID=ff808081110677790111070ccffe0001','900','700');">
-								   <img src="${pageContext.request.contextPath }/images/edit.gif" border="0" style="CURSOR:hand"></a>													
-								</td>
-								
-								<td align="center" style="HEIGHT: 22px" align="center" width="10%">
-									<a href="#" onclick="openWindow('userEdit.jsp?userID=ff808081110677790111070ccffe0001&viewflag=1','900','700');">
-									<img src="${pageContext.request.contextPath }/images/button_view.gif" width="20" height="18" border="0" style="CURSOR:hand"></a>												
-								</td>
-							</tr> --%>
 							<s:if test="#request.elecRisks!=null && #request.elecRisks.size()>0">
 								<s:iterator value="#request.elecRisks">
 									<tr onmouseover="this.style.backgroundColor = 'white'" onmouseout="this.style.backgroundColor = '#F5FAFE';">
