@@ -55,7 +55,7 @@ var privilegeDate = [
 			isParent: false,
 			icon:'../images/MenuIcon/jiancetaijianzhu.gif',
 			target:'mainFrame',
-			url:'../building/buildingIndex.jsp',
+			url:'../system/elecRiskAction_risk.do',
 			name:'风险统计'
 		}
 	]

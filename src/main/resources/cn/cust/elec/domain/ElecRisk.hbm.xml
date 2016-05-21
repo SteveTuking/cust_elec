@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.cust.elec.domain.ElecRisk" table="Elec_Risk">
+		<id name="riskID" type="string" column="riskID">
+			<generator class="uuid"></generator>
+		</id>
+		<property name="riskdate" type="date" column="riskdate"></property>
+		<property name="risktype" type="string" column="risktype"></property>
+		<property name="riskrank" type="string" column="riskrank"></property>
+		<property name="riskdetail" type="string" column="riskdetail"></property>
+	</class>
+</hibernate-mapping>
