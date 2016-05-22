@@ -3,12 +3,13 @@
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="cn.cust.elec.domain.ElecDevice" table="Elec_User_File">
+	<class name="cn.cust.elec.domain.ElecDevice" table="Elec_device">
 		<id name="deviceID" type="string" column="deviceID">
 			<generator class="uuid"></generator>
 		</id>
 		<property name="deviceDate" type="date" column="deviceDate"></property>
 		<property name="deviceDetail" type="string" column="deviceDetail"></property>
+		<property name="deviceNum" type="string" column="deviceNum"></property>
 		<!--风险和设备是一对多的关系-->
 		<many-to-one name="elecRisk" class="cn.cust.elec.domain.ElecRisk">
 			<column name="riskID"></column>

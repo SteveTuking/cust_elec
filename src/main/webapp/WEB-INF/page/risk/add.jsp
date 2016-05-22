@@ -91,13 +91,13 @@
     	$tdNu.html(tempRow);
     	
     	var $tdNum = $("<td align='center'></td>");
-    	$tdNum.html("<input name=\"uploads\"  type=\"text\" size=\"25\" id=\""+tempRow+"\"> ");
+    	$tdNum.html("<input name=\"deviceNum\"  type=\"text\" size=\"25\" id=\""+tempRow+"\"> ");
     	
     	var $tdtime = $("<td align='center'></td>");
-    	$tdtime.html("<input name=\"uploads\"  type=\"text\" size=\"25\" onClick=\"WdatePicker()\">");
+    	$tdtime.html("<input name=\"deviceDate\"  type=\"text\" size=\"25\" onClick=\"WdatePicker()\">");
     	
     	var $tddetail = $("<td align='center'></td>");
-    	$tddetail.html("<input name=\"uploads\"  type=\"text\" size=\"25\">");
+    	$tddetail.html("<input name=\"deviceDetail\"  type=\"text\" size=\"25\">");
     	
     	var $tdDel = $("<td align='center'></td>");
     	$tdDel.html("<a href='javascript:delTableRow(\""+tempRow+"\")'><img src=${pageContext.request.contextPath }/images/delete.gif width=15 height=14 border=0 style=CURSOR:hand></a>");

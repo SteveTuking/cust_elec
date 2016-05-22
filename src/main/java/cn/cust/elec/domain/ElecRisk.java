@@ -69,4 +69,29 @@ public class ElecRisk implements Serializable {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+	
+	private String[] deviceID;
+	private Date[] deviceDate;
+	private String[] deviceDetail;
+
+	public String[] getDeviceID() {
+		return deviceID;
+	}
+	public void setDeviceID(String[] deviceID) {
+		this.deviceID = deviceID;
+	}
+	public Date[] getDeviceDate() {
+		return deviceDate;
+	}
+	public void setDeviceDate(Date[] deviceDate) {
+		this.deviceDate = deviceDate;
+	}
+	public String[] getDeviceDetail() {
+		return deviceDetail;
+	}
+	public void setDeviceDetail(String[] deviceDetail) {
+		this.deviceDetail = deviceDetail;
+	}
+	
+	
 }

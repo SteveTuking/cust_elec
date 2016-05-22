@@ -5,14 +5,17 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.cust.elec.dao.IElecDeviceDao;
 import cn.cust.elec.dao.IElecRiskDao;
 import cn.cust.elec.dao.IElecSystemDDLDao;
+import cn.cust.elec.domain.ElecDevice;
 import cn.cust.elec.domain.ElecRisk;
 import cn.cust.elec.service.IElecRiskService;
 
@@ -23,6 +26,8 @@ public class ElecRiskServiceImpl implements IElecRiskService {
 	private IElecRiskDao elecRiskDao;
 	@Autowired
 	private IElecSystemDDLDao elecSystemDDLDao;
+	@Autowired
+	private IElecDeviceDao elecDeviceDao;
 	
 	public List<ElecRisk> findRiksListByCondition(ElecRisk elecRisk) throws Exception {
 
@@ -78,7 +83,23 @@ public class ElecRiskServiceImpl implements IElecRiskService {
 	}
 	@Transactional
 	public void save(ElecRisk elecRisk) throws Exception {
+		/*String riskID = UUID.randomUUID().toString().replace("-", "");
+		elecRisk.setRiskID(riskID);*/
 		elecRiskDao.save(elecRisk);
+		this.saveDevices(elecRisk);
+	}
+	public void saveDevices(ElecRisk elecRisk){
+		if(elecRisk.getDeviceDate().length>0){
+			for(int i = 0; i < elecRisk.getDeviceDate().length; i++){
+				ElecDevice elecDevice = new ElecDevice();
+				elecDevice.setRiskID(elecRisk.getRiskID());
+				//elecDevice.setDeviceID(elecRisk.getDeviceID()[i]);
+				elecDevice.setElecRisk(elecRisk);
+				elecDevice.setDeviceDate(elecRisk.getDeviceDate()[i]);
+				elecDevice.setDeviceDetail(elecRisk.getDeviceDetail()[i]);
+				elecDeviceDao.save(elecDevice);
+			}
+		}
 	}
 
 }
