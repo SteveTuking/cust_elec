@@ -27,5 +27,6 @@
 		<mapping resource="cn/cust/elec/domain/ElecRolePopedom.hbm.xml"/>
 		<!-- 风险 -->
 		<mapping resource="cn/cust/elec/domain/ElecRisk.hbm.xml"/>
+		<mapping resource="cn/cust/elec/domain/ElecDevice.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>

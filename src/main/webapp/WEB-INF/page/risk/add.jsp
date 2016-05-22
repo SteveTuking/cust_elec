@@ -94,7 +94,7 @@
     	$tdNum.html("<input name=\"uploads\"  type=\"text\" size=\"25\" id=\""+tempRow+"\"> ");
     	
     	var $tdtime = $("<td align='center'></td>");
-    	$tdtime.html("<input name=\"uploads\"  type=\"text\" size=\"25\">");
+    	$tdtime.html("<input name=\"uploads\"  type=\"text\" size=\"25\" onClick=\"WdatePicker()\">");
     	
     	var $tddetail = $("<td align='center'></td>");
     	$tddetail.html("<input name=\"uploads\"  type=\"text\" size=\"25\">");

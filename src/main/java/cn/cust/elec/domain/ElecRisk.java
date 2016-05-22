@@ -2,6 +2,8 @@ package cn.cust.elec.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @SuppressWarnings("serial")
 public class ElecRisk implements Serializable {
@@ -10,6 +12,16 @@ public class ElecRisk implements Serializable {
 	private String risktype;
 	private String riskrank;
 	private String riskdetail;
+	
+	//private Set<ElecUserFile> elecUserFiles = new HashSet<ElecUserFile>();
+	private Set<ElecDevice> elecDevices = new HashSet<ElecDevice>();
+	
+	public Set<ElecDevice> getElecDevices() {
+		return elecDevices;
+	}
+	public void setElecDevices(Set<ElecDevice> elecDevices) {
+		this.elecDevices = elecDevices;
+	}
 	
 	public String getRiskID() {
 		return riskID;

@@ -11,5 +11,12 @@
 		<property name="risktype" type="string" column="risktype"></property>
 		<property name="riskrank" type="string" column="riskrank"></property>
 		<property name="riskdetail" type="string" column="riskdetail"></property>
+		<!-- 一个风险对应多个设备 -->
+		<set name="elecDevices" table="Elec_Device" inverse="true" order-by="progressTime desc">
+			<key>
+				<column name="riskID"></column>
+			</key>
+			<one-to-many class="cn.cust.elec.domain.ElecDevice"/>
+		</set> 
 	</class>
 </hibernate-mapping>
