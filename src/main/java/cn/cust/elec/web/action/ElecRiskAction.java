@@ -54,5 +54,15 @@ public class ElecRiskAction extends BaseAction<ElecRisk> {
 		}
 		return "add";
 	}
+	
+	public String save(){
+		try {
+			elecRiskService.save(elecRisk);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			e.printStackTrace();
+		}
+		return "close";
+	}
 }
 

@@ -88,6 +88,7 @@
 		<action name="elecRiskAction_*" class="elecRiskAction" method="{1}">
 			<result name="risk">/WEB-INF/page/risk/risk.jsp</result>
 			<result name="add">/WEB-INF/page/risk/add.jsp</result>
+			<result name="add">/WEB-INF/page/risk/add.jsp</result>
 		</action>
 		
 	</package>

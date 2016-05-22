@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.cust.elec.dao.IElecRiskDao;
 import cn.cust.elec.dao.IElecSystemDDLDao;
@@ -74,6 +75,10 @@ public class ElecRiskServiceImpl implements IElecRiskService {
 				risk.setRisktype(risktype);
 			}
 		}
+	}
+	@Transactional
+	public void save(ElecRisk elecRisk) throws Exception {
+		elecRiskDao.save(elecRisk);
 	}
 
 }

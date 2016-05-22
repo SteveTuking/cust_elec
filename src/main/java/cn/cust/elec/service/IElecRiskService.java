@@ -8,4 +8,6 @@ public interface IElecRiskService {
 
 	public List<ElecRisk> findRiksListByCondition(ElecRisk elecRisk) throws Exception;
 
+	public void save(ElecRisk elecRisk) throws Exception;
+
 }

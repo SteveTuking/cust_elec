@@ -15,120 +15,29 @@
    
 <Script language="javascript">
 	function check_null(){
-	    if($.trim($("input[name='logonName']").val())=="")
+		if($("select[name='riskrank']").val()=="")
 		{
-			alert("登录名不能为空");
-			$("input[name='logonName']")[0].focus();
+			alert("请选择事故级别");
+			$("select[name='riskrank']")[0].focus();
 			return false;
 		}
-	    if($.trim($("input[name='userName']").val())=="")
+	    if($("select[name='risktype']").val()=="")
 		{
-			alert("用户姓名不能为空");
-			$("input[name='userName']")[0].focus();
+			alert("请选择风险类别");
+			$("select[name='risktype']")[0].focus();
 			return false;
 		}
-		if($("select[name='sexID']").val()=="")
+	    if($.trim($("input[name='riskdate']").val())=="")
 		{
-			alert("请选择性别");
-			$("select[name='sexID']")[0].focus();
+			alert("事故时间不能为空");
+			$("input[name='riskdate']")[0].focus();
 			return false;
 		}
-	    if($("select[name='jctID']").val()=="")
-		{
-			alert("请选择所属单位");
-			$("select[name='jctID']")[0].focus();
-			return false;
-		}
-	    if($.trim($("input[name='onDutyDate']").val())=="")
-		{
-			alert("入职时间不能为空");
-			$("input[name='onDutyDate']")[0].focus();
-			return false;
-		}
-	    if($("select[name='postID']").val()=="")
-		{
-			alert("请选择职位");
-			$("select[name='postID']")[0].focus();
-			return false;
-		}
-        if($("input[name='logonPwd']").val()!=$("input[name='passwordconfirm']").val()){
-		  	alert("两次输入密码不一致，请重新输入");
-		  	return false;
-		}
-        if($("textarea[name='remark']").val().length>250){
-           
-         	alert("备注字符长度不能超过250");
-         	$("textarea[name='remark']")[0].focus();
- 			return false; 
-        }
-       	//选择[是]
-       	if($("#isDuty option:nth-child(1)").is(":selected")){
-    	   if($.trim($("input[name='onDutyDate']").val())==""){
- 			   alert("该用户属于在职人员，请填写入职时间");
- 			   $("input[name='onDutyDate']")[0].focus();
- 			   return false; 
- 		   	}
-       	} 
-       //选择[否]
-       if($("#isDuty option:nth-child(2)").is(":selected")){
-    	   alert("不允许新增用户操作，选择离职！");
-    	   $("select[name='isDuty']")[0].focus();
- 		   return false;
-       }
        
  	   //上传的文件不能为空
- 	   var $tbl=$("#filesTbl tr");
-       var flag = false;
- 	   $tbl.each(function(index,domEle){
- 		   //去掉表头
- 		   if(index==0){
- 			   return true;//相当于continue
- 		   }
- 		   //从1开始是为了去掉表头
- 		   else{
- 			   var $uploads = $(this).find("td:nth-child(2)").find("input[name='uploads']").val();
- 			   if($.trim($uploads)==""){
- 				  alert("请选择第"+ index +"行的文件路径！");
- 				  flag = true;
- 				  return false;//相当于break
- 			   }
- 		   }
- 	   })
- 	   //说明附件存在错误
- 	   if(flag){
- 		   return false;
- 	   }
       
-	   /**正则表达式的使用*/	
-       var theForm=document.Form1;
-       if(checkNull(theForm.contactTel)){
-           if(!checkPhone(theForm.contactTel.value))
-  		  {
-  			alert("请输入正确的电话号码");
-  			theForm.contactTel.focus();
-  			return false;
-  		  }
-  		}
-  		
-  	    if(checkNull(theForm.mobile)){
-           if(!checkMobilPhone(theForm.mobile.value))
-  		  {
-  			alert("请输入正确的手机号码");
-  			theForm.mobile.focus();
-  			return false;
-  		  }
-  		}
-  		
-  	   if(checkNull(theForm.email))	{
-           if(!checkEmail(theForm.email.value))
-  		 {
-  			alert("请输入正确的EMail");
-  			theForm.email.focus();
-  			return false;
-  		 }
-  	   }
-  		
-  	   $("#Form1").attr("action","${pageContext.request.contextPath }/system/elecUserAction_save.do");
+	   /**正则表达式的使用*/
+  	   $("#Form1").attr("action","${pageContext.request.contextPath }/system/elecRiskAction_save.do");
 	   $("#Form1").submit();
 	}
 	function checkTextAreaLen(){
@@ -160,42 +69,16 @@
         });
     	
     }
-    
-    /**校验登录名是否出现重复*/
-    function checkUser(o){
-    	//alert(o.value);//dom的写法
-    	//alert($(o).val());//jquery的写法
-    	var logonName = $(o).val();
-    	//以登录名作为查询条件，查询该登录名是否在数据库表中存在记录
-    	$.post("elecUserAction_checkUser.do",{"logonName":logonName},function(data){
-    		//如果栈顶是模型驱动的对象，取值的时候应该使用data.message的方式
-    		//如果栈顶是模型驱动的对象的某个属性，取值的时候应该使用data即可
-    		if(data==1){
-				$("#check").html("<font color='red'>登录名不能为空</font>");
-				$(o)[0].focus();
-				$("#BT_Submit").attr("disabled","none");
-			}
-			else if(data==2){
-				$("#check").html("<font color='red'>登录名已经存在</font>");
-				$(o)[0].focus();
-				$("#BT_Submit").attr("disabled","none");
-			}
-			else{
-				$("#check").html("<font color='green'>登录名可以使用</font>");
-				$("#BT_Submit").attr("disabled","");
-			}
-    	});
-    }
     function fileTr(){
     	var value = $("#BT_File").val();
-		if(value == "打开附件"){
+		if(value == "添加设备"){
 			$("#trFile").css("display","");
-			$("#BT_File").val("隐藏附件");
+			$("#BT_File").val("隐藏设备");
 			$("#item").css("display","");
 		}
 		else{
 			$("#trFile").css("display","none");
-			$("#BT_File").val("打开附件");
+			$("#BT_File").val("添加设备");
 			$("#item").css("display","none");
 		}
     }
@@ -203,11 +86,18 @@
     	//获取表格对象
     	var tb1 = $("#filesTbl");
     	var tempRow = $("#filesTbl tr").size();//获取表格的行数,+1的目的去掉添加选项的按钮
-    	var $tdNum = $("<td align='center'></td>");
-    	$tdNum.html(tempRow);
     	
-    	var $tdName = $("<td align='center'></td>");
-    	$tdName.html("<input name=\"uploads\"  type=\"file\" size=\"25\" id=\""+tempRow+"\">");
+    	var $tdNu = $("<td align='center'></td>");
+    	$tdNu.html(tempRow);
+    	
+    	var $tdNum = $("<td align='center'></td>");
+    	$tdNum.html("<input name=\"uploads\"  type=\"text\" size=\"25\" id=\""+tempRow+"\"> ");
+    	
+    	var $tdtime = $("<td align='center'></td>");
+    	$tdtime.html("<input name=\"uploads\"  type=\"text\" size=\"25\">");
+    	
+    	var $tddetail = $("<td align='center'></td>");
+    	$tddetail.html("<input name=\"uploads\"  type=\"text\" size=\"25\">");
     	
     	var $tdDel = $("<td align='center'></td>");
     	$tdDel.html("<a href='javascript:delTableRow(\""+tempRow+"\")'><img src=${pageContext.request.contextPath }/images/delete.gif width=15 height=14 border=0 style=CURSOR:hand></a>");
@@ -215,8 +105,10 @@
     	
     	// 创建tr，将3个td放置到tr中
     	var $tr = $("<tr></tr>");
+    	$tr.append($tdNu)
     	$tr.append($tdNum);
-    	$tr.append($tdName);
+    	$tr.append($tdtime);
+    	$tr.append($tddetail);
     	$tr.append($tdDel);
     	//在表格的最后追加新增的tr
     	tb1.append($tr);
@@ -290,7 +182,7 @@
 	
 	<TR>
 	<td  align="center"  colSpan="4"  class="ta_01" style="WIDTH: 100%" align="left" bgColor="#f5fafe">
-		<input type="button" id="BT_File" name="BT_File" value="打开附件"  style="font-size:12px; color:black; height=22;width=55"   onClick="fileTr()">
+		<input type="button" id="BT_File" name="BT_File" value="添加设备"  style="font-size:12px; color:black; height=22;width=55"   onClick="fileTr()">
 		<input type="button" id="item" name="item" value="添加选项" style="difont-size:12px; color:black; display: none;height=20;width=80 " onClick="insertRows()">
 	</td>
 	</TR>
@@ -305,9 +197,17 @@
 						background="${pageContext.request.contextPath }/images/tablehead.jpg" height=20>
 						编号
 					</td>
+					<td class="ta_01" align="center" width="10%"
+						background="${pageContext.request.contextPath }/images/tablehead.jpg" height=20>
+						设备编号
+					</td>
 					<td class="ta_01" align="center" width="40%"
 						background="${pageContext.request.contextPath }/images/tablehead.jpg" height=20>
-						选择待上传文件
+						时间
+					</td>
+					<td class="ta_01" align="center" width="40%"
+						background="${pageContext.request.contextPath }/images/tablehead.jpg" height=20>
+						描述
 					</td>
 					<td class="ta_01" align="center" width="10%"
 						background="${pageContext.request.contextPath }/images/tablehead.jpg" height=20>
