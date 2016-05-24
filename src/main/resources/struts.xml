@@ -90,6 +90,10 @@
 			<result name="add">/WEB-INF/page/risk/add.jsp</result>
 			<result name="add">/WEB-INF/page/risk/add.jsp</result>
 		</action>
+		<!-- 设备管理 -->
+		<action name="elecDeviceAction_*" class="elecDeviceAction" method="{1}">
+			<result name="home">/WEB-INF/page/device/deviceIndex.jsp</result>
+		</action>
 		
 	</package>
 </struts>

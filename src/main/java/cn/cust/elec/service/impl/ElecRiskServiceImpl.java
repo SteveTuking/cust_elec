@@ -95,6 +95,7 @@ public class ElecRiskServiceImpl implements IElecRiskService {
 				elecDevice.setRiskID(elecRisk.getRiskID());
 				//elecDevice.setDeviceID(elecRisk.getDeviceID()[i]);
 				elecDevice.setElecRisk(elecRisk);
+				elecDevice.setDeviceNum(elecRisk.getDeviceNum()[i]);
 				elecDevice.setDeviceDate(elecRisk.getDeviceDate()[i]);
 				elecDevice.setDeviceDetail(elecRisk.getDeviceDetail()[i]);
 				elecDeviceDao.save(elecDevice);

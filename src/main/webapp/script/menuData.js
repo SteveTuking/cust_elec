@@ -12,17 +12,9 @@ var privilegeDate = [
 			pid:'aa',
 			isParent:false,
 			target:'mainFrame',
-			url:'../equapment/equapmentIndex.jsp',
+			url:'../system/elecDeviceAction_home.do',
 			icon:'../images/MenuIcon/yiqishebeiguanli.gif',
 			name:'仪器设备管理'
-		},{
-			mid:'ac',
-			pid:'aa',
-			isParent:false,
-			target:'mainFrame',
-			url:'../equapment/adjustIndex.jsp',
-			icon:'../images/MenuIcon/shebeijiaozhunjianxiu.gif',
-			name:'设备校准检修'
 		}
 	]
 }, {
