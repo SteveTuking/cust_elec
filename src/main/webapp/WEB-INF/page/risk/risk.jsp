@@ -90,9 +90,9 @@
 					<td class="ta_01" align="center" bgcolor="#f5fafe" height="22">
 					风险时间：</td>
 					<td class="ta_01" colspan="3">
-						<input type="text" name="onDutyDateBegin" id="onDutyDateBegin" maxlength="50" size="20" onclick="WdatePicker()"/>
+						<input type="text" name="startDate" id="onDutyDateBegin" maxlength="50" size="20" onclick="WdatePicker()"/>
 						~
-						<input type="text" name="onDutyDateEnd" id="onDutyDateEnd" maxlength="50" size="20" onclick="WdatePicker()"/>
+						<input type="text" name="endDate" id="onDutyDateEnd" maxlength="50" size="20" onclick="WdatePicker()"/>
 					</td>
 				</tr>
 

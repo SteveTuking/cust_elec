@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import cn.cust.elec.domain.ElecRisk;
+import cn.cust.elec.domain.ElecRiskVO;
 import cn.cust.elec.domain.ElecSystemDDL;
 import cn.cust.elec.service.IElecRiskService;
 import cn.cust.elec.service.IElecSystemDDLService;
@@ -64,5 +65,19 @@ public class ElecRiskAction extends BaseAction<ElecRisk> {
 		}
 		return "close";
 	}
+	
+	public String calcRisk(){
+		if(elecRisk.getEndDate()!=null){
+			try {
+				List<ElecRiskVO> elecRiskVOs = elecRiskService.calcElecRisk(elecRisk);
+				request.setAttribute("elemRiskVOs", elecRiskVOs);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+				e.printStackTrace();
+			}
+		}
+		return "calcRisk";
+	}
+	
 }
 

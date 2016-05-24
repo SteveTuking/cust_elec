@@ -49,6 +49,15 @@ var privilegeDate = [
 			target:'mainFrame',
 			url:'../system/elecRiskAction_risk.do',
 			name:'风险统计'
+		},
+		{
+			mid:'al',
+			pid:'ak',
+			isParent: false,
+			icon:'../images/MenuIcon/jiancetaijianzhu.gif',
+			target:'mainFrame',
+			url:'../system/elecRiskAction_calcRisk.do',
+			name:'风险评估'
 		}
 	]
 },

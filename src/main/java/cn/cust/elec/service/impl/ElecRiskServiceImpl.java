@@ -1,11 +1,13 @@
 package cn.cust.elec.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,9 @@ import cn.cust.elec.dao.IElecRiskDao;
 import cn.cust.elec.dao.IElecSystemDDLDao;
 import cn.cust.elec.domain.ElecDevice;
 import cn.cust.elec.domain.ElecRisk;
+import cn.cust.elec.domain.ElecRiskVO;
 import cn.cust.elec.service.IElecRiskService;
+import freemarker.template.SimpleDate;
 
 @Service
 public class ElecRiskServiceImpl implements IElecRiskService {
@@ -86,7 +90,9 @@ public class ElecRiskServiceImpl implements IElecRiskService {
 		/*String riskID = UUID.randomUUID().toString().replace("-", "");
 		elecRisk.setRiskID(riskID);*/
 		elecRiskDao.save(elecRisk);
-		this.saveDevices(elecRisk);
+		if(elecRisk.getDeviceDate()!=null){
+			this.saveDevices(elecRisk);
+		}
 	}
 	public void saveDevices(ElecRisk elecRisk){
 		if(elecRisk.getDeviceDate().length>0){
@@ -102,5 +108,85 @@ public class ElecRiskServiceImpl implements IElecRiskService {
 			}
 		}
 	}
-
+	public List<ElecRiskVO> calcElecRisk(ElecRisk elecRisk) throws Exception {
+		List<ElecRiskVO> elecRiskVOs = new ArrayList<ElecRiskVO>();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		int start = this.getMon(elecRisk.getStartDate());
+		int end = this.getMon(elecRisk.getEndDate());
+		int year = this.getYear(elecRisk.getStartDate());
+		for(int i = start; i <= end; i++){
+			String fstart = "";
+			String fend = "";
+			if(i<10){
+				fstart = year+"-"+"0"+i+"-01";
+			}else{
+				fstart = year+"-"+i+"-01";
+			}
+			if(i+1<10){
+				fend = year+"-"+"0"+(i+1)+"-01";
+			}else{
+				fend = year+"-"+(i+1)+"-01";
+			}
+			
+			List<ElecRisk> risks = this.findByDate(this.string2Date(fstart),this.string2Date(fend));
+			ElecRiskVO elecRiskVO = new ElecRiskVO();
+			elecRiskVO.setTime(this.string2Date(fstart));
+			for(ElecRisk er : risks){
+				calcVo(er,elecRiskVO);
+			}
+			elecRiskVOs.add(elecRiskVO);
+		}
+		return elecRiskVOs;
+	}
+	public List<ElecRisk> findByDate(Date begin,Date end){
+		String condition = "";
+		List<Object> paramsList = new ArrayList<Object>();
+		Date beginDate = begin;
+		if (beginDate != null) {
+			condition += " and o.riskdate >= ?";
+			paramsList.add(beginDate);
+		}
+		// 入职结束时间
+		Date endDate = end;
+		if (endDate != null) {
+			condition += " and o.riskdate < ?";
+			paramsList.add(endDate);
+		}
+		Object[] params = paramsList.toArray();
+		// 排序（按照入职时间的升序排列）
+		Map<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.riskdate", "asc");
+		List<ElecRisk> list = elecRiskDao.findCollectionByConditionNoPage(condition, params, orderby);
+		return list;
+	}
+	
+	public Integer getMon(Date date){
+		return Integer.parseInt(new SimpleDateFormat("yyyy-MM-dd").format(date).split("-")[1]);
+	}
+	public Integer getYear(Date date){
+		return Integer.parseInt(new SimpleDateFormat("yyyy-MM-dd").format(date).split("-")[0]);
+	}
+	public Date string2Date(String date) throws ParseException{
+		return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+	}
+	public void calcVo(ElecRisk elecRisk,ElecRiskVO elecRiskVO){
+		switch(elecRisk.getRisktype()){
+			case "1" : elecRiskVO.setBreakRule(elecRiskVO.getBreakRule()+1);break;
+			case "2" : elecRiskVO.setPeopleFourOne(elecRiskVO.getPeopleFourOne()+1);;break;
+			case "3" : elecRiskVO.setElecFiveOne(elecRiskVO.getElecFiveOne()+1);;break;
+			case "4" : elecRiskVO.setDeviceFourOne(elecRiskVO.getDeviceFourOne()+1);;break;
+			case "5" : elecRiskVO.setSimplePeople(elecRiskVO.getSimplePeople()+1);;break;
+			case "6" : elecRiskVO.setMidPeople(elecRiskVO.getMidPeople()+1);;break;
+			case "7" : elecRiskVO.setSimpleElec(elecRiskVO.getSimpleElec()+1);;break;
+			case "8" : elecRiskVO.setMidElec(elecRiskVO.getMidElec()+1);;break;
+			case "9" : elecRiskVO.setSimpleDevice(elecRiskVO.getSimpleDevice()+1);;break;
+			case "10" : elecRiskVO.setMidDevice(elecRiskVO.getMidDevice()+1);;break;
+			case "11" : elecRiskVO.setSuperPeople(elecRiskVO.getSuperPeople()+1);;break;
+			case "12" : elecRiskVO.setSsuperPeople(elecRiskVO.getSsuperPeople()+1);;break;
+			case "13" : elecRiskVO.setSuperElec(elecRiskVO.getSuperElec()+1);;break;
+			case "14" : elecRiskVO.setSuperDevice(elecRiskVO.getSuperDevice()+1);;break;
+			case "15" : elecRiskVO.setSsuperDevice(elecRiskVO.getSsuperDevice()+1);;break;
+		}
+	}
 }
