@@ -34,6 +34,32 @@
      	 selectuser[i].checked = user.checked;
       }
    }
+   function query() {debugger;
+	   //src="http://localhost:8080/cust_elec/system/elecRiskAction_piePng.do"
+	   var btime = $("#onDutyDateBegin").val();
+	   var etime = $("#onDutyDateEnd").val();
+	   if(btime==""){
+		   var sarr =  btime.split("-");
+		   var earr = etime.split("-");
+		   if(sarr[0]!=earr[0]){
+			   alert("只能统计同一年的风险");
+		   }
+		   if((earr[1]<sarr[1])||(earr[2]>sarr[2])){
+			   alert("后一个时间必须大于前一个");
+		   }
+		   $("#piePng").hide();
+	   }else{
+		   document.forms[0].submit();
+	   }
+   }
+   function calc(){debugger;
+	   var btime = $("#onDutyDateBegin").val();
+	   var etime = $("#onDutyDateEnd").val();
+	   if(btime!=""){
+		   $("#piePng").show();
+		   $("#pieImg").attr("src","http://localhost:8080/cust_elec/system/elecRiskAction_piePng.do?stime="+new Date()); 
+	   }
+   }
   </script>
 
 <HTML>
@@ -42,6 +68,7 @@
 		<LINK href="${pageContext.request.contextPath }/css/Style.css" type="text/css" rel="stylesheet">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/My97DatePicker/WdatePicker.js"></script>
 		<script language="javascript" src="${pageContext.request.contextPath }/script/function.js"></script>
+		<script language="javascript" src="${pageContext.request.contextPath }/script/jquery-1.4.2.js"></script>
 	</HEAD>
 		
 	<body >
@@ -58,9 +85,9 @@
 					<td class="ta_01" align="center" bgcolor="#f5fafe" height="22">
 					风险时间：</td>
 					<td class="ta_01" colspan="3">
-						<input type="text" name="startDate" id="onDutyDateBegin" maxlength="50" size="20" onclick="WdatePicker()"/>
+						<input type="text" name="startDate" value="<s:date name="startDate" format="yyyy-MM-dd"/>" id="onDutyDateBegin" maxlength="50" size="20" onclick="WdatePicker()"/>
 						~
-						<input type="text" name="endDate" id="onDutyDateEnd" maxlength="50" size="20" onclick="WdatePicker()"/>
+						<input type="text" name="endDate" value="<s:date name="endDate" format="yyyy-MM-dd"/>" id="onDutyDateEnd" maxlength="50" size="20" onclick="WdatePicker()"/>
 					</td>
 				</tr>
 
@@ -85,11 +112,9 @@
                    </td>
 					<td class="ta_01" align="right">
 					    <input style="font-size:12px; color:black; height=20;width=80" id="BT_Add" type="button" value="查询" name="BT_find" 
-						 onclick="document.forms[0].submit()">&nbsp;&nbsp;
-						<input style="font-size:12px; color:black; height=20;width=80" id="BT_Add" type="button" value="添加风险" name="BT_Add" 
-						 onclick="openWindow('${pageContext.request.contextPath }/system/elecRiskAction_add.do','900','700')">&nbsp;&nbsp;
-						<input style="font-size:12px; color:black; height=20;width=80" id="BT_Delete" type="button" value="批量删除" name="BT_Delete" 
-						 onclick="return deleteAll()">&nbsp;&nbsp;
+						 onclick="query()">&nbsp;&nbsp;
+					    <input style="font-size:12px; color:black; height=20;width=80" id="BT_Add" type="button" value="评估" name="BT_find" 
+						 onclick="calc()">&nbsp;&nbsp;
 					</td>
 				</tr>
 					
@@ -174,15 +199,13 @@
 								</s:iterator>
 							</s:if>
 						</table>					
-						
 					</td>
-				</tr>        
+				</tr>       
 			</TBODY>
 		</table>
+		<div id="piePng" style="width: 1124px ;float: right;">
+           <img  id="pieImg" border="0"/>
+        </div>
 		</form>
-		
-
-
-
 	</body>
 </HTML>

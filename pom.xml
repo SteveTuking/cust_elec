@@ -137,7 +137,13 @@
 			<artifactId>CKFinderPlugin-ImageResize</artifactId>
 			<version>2.3.1</version>
 		</dependency>
+		<!-- jfreechart -->
 		
+		<dependency>
+		    <groupId>jfree</groupId>
+		    <artifactId>jfreechart</artifactId>
+		    <version>1.0.13</version>
+		</dependency>
 	</dependencies>
   <build>
 		<finalName>cust_elec</finalName>

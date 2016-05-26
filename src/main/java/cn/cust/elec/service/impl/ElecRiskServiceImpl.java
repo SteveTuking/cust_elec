@@ -3,7 +3,6 @@ package cn.cust.elec.service.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,7 +20,6 @@ import cn.cust.elec.domain.ElecDevice;
 import cn.cust.elec.domain.ElecRisk;
 import cn.cust.elec.domain.ElecRiskVO;
 import cn.cust.elec.service.IElecRiskService;
-import freemarker.template.SimpleDate;
 
 @Service
 public class ElecRiskServiceImpl implements IElecRiskService {
@@ -188,5 +186,20 @@ public class ElecRiskServiceImpl implements IElecRiskService {
 			case "14" : elecRiskVO.setSuperDevice(elecRiskVO.getSuperDevice()+1);;break;
 			case "15" : elecRiskVO.setSsuperDevice(elecRiskVO.getSsuperDevice()+1);;break;
 		}
+	}
+	@Override
+	public Map<String, Double> getSourceDate(Date parse, Date parse2) throws Exception { 
+		Map<String,Double> result = new LinkedHashMap<String,Double>();
+		ElecRisk er = new ElecRisk();
+		er.setStartDate(parse);
+		er.setEndDate(parse2);
+		for(int i = 1; i <= 3; i++){
+			er.setRiskrank(""+i);
+			String rank = elecSystemDDLDao.findDdlNameByKeywordAndDdlCode("事故级别", i+"");
+			List<ElecRisk> ers = this.findRiksListByCondition(er);
+			int size = ers.size();
+			result.put(rank+size, (double) size);
+		}
+		return result;
 	}
 }
