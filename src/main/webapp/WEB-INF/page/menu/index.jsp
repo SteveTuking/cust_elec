@@ -1,4 +1,5 @@
 <%@ page language="java"  pageEncoding="UTF-8"%>
+<%@taglib uri="/struts-tags" prefix="s"%>
 <html>
 <head>
 <meta http-equiv="Content-Language" content="zh-cn">
@@ -35,7 +36,7 @@ FORM {
 	MARGIN: 0px; BACKGROUND-COLOR: #ffffff
 } 
 </STYLE>
-<title>电力安全风险管理系统</title>
+<title>国家电力监测中心</title>
 </head>
 <body onload="ini()">
 <form action="${pageContext.request.contextPath}/system/elecMenuAction_menuHome.do" method="post" target="_top">
@@ -58,6 +59,7 @@ FORM {
 						<td height="313" width="73%"></td>
 						<td height="99" width="27%">
 							<table border="0" width="70%" id="table4">
+								<s:actionerror/>
 								<tr>
 									<td width="100"><img border="0" src="${pageContext.request.contextPath}/images/yonghu.jpg" width="75" height="20"></td>
 									<td><input type="text" name="name" style="width: 125 px" size="20" value=""  maxlength="25"></td>

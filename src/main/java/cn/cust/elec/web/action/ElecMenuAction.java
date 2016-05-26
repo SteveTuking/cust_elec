@@ -1,5 +1,6 @@
 package cn.cust.elec.web.action;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import cn.cust.elec.domain.ElecCommonMsg;
+import cn.cust.elec.domain.ElecUser;
 import cn.cust.elec.service.IElecCommonMsgService;
+import cn.cust.elec.service.IElecUserService;
+import cn.cust.elec.utils.MD5keyBean;
 import cn.cust.elec.utils.ValueUtils;
 import cn.cust.elec.web.form.MenuForm;
 
@@ -22,6 +26,8 @@ public class ElecMenuAction extends BaseAction<MenuForm> {
 	/**注入运行监控Service*/
 	@Autowired
 	IElecCommonMsgService elecCommonMsgService;
+	@Autowired
+	private IElecUserService elecUserService;
 	//日志
 	private Log log = LogFactory.getLog(this.getClass());
 	
@@ -31,7 +37,32 @@ public class ElecMenuAction extends BaseAction<MenuForm> {
 	* @Return: String：跳转到menu/home.jsp
 	*/
 	public String menuHome(){
+		String name = menuForm.getName();
+		String password = menuForm.getPassword();
+		/**一：验证用户名和密码输入是否正确*/
+		//* 使用登录名作为查询条件，查询用户表，因为登录名是惟一值，获取ElecUser的对象
+		ElecUser elecUser = elecUserService.findUserByLogonName(name);
+		//* 如果ElecUser对象为空，页面提示【用户名输入有误！】
+		if(elecUser==null){
+			this.addActionError("用户名输入有误！");
+			return "logonError";//跳转到登录页面
+		}
+		//* 校验密码是否正确
+		if(StringUtils.isBlank(password)){
+			this.addActionError("密码不能为空！");
+			return "logonError";//跳转到登录页面
+		}
+		else{
+			MD5keyBean bean = new MD5keyBean();
+			String md5password = bean.getkeyBeanofStr(password);
+			//比对
+			if(!md5password.equals(elecUser.getLogonPwd())){
+				this.addActionError("密码输入有误！");
+				return "logonError";//跳转到登录页面
+			}
+		}
 		System.out.println(menuForm.getName()+"   "+menuForm.getPassword());
+		request.getSession().setAttribute("globle_role", elecUser);
 		return "menuHome";
 	}
 	

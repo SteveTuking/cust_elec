@@ -226,4 +226,23 @@ public class ElecUserServiceImpl implements IElecUserService {
 		elecUserDao.deleteObjectByIds(userIDs);
 	}
 
+	@Override
+	public ElecUser findUserByLogonName(String name) {
+		String condition = "";
+		List<Object> paramsList = new ArrayList<Object>();
+		if(StringUtils.isNotBlank(name)){
+			condition += " and o.logonName=?";
+			paramsList.add(name);
+		}
+		Object [] params = paramsList.toArray();
+		//查询用户信息
+		List<ElecUser> list = elecUserDao.findCollectionByConditionNoPage(condition, params, null);
+		//返回惟一值
+		ElecUser elecUser = null;
+		if(list!=null && list.size()>0){
+			elecUser = list.get(0);
+		}
+		return elecUser;
+	}
+
 }

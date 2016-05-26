@@ -19,4 +19,6 @@ public interface IElecUserService {
 
 	public void deleteByUserID(String userID) throws Exception;
 
+	public ElecUser findUserByLogonName(String name);
+
 }

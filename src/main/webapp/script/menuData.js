@@ -51,7 +51,7 @@ var privilegeDate = [
 			name:'风险统计'
 		},
 		{
-			mid:'al',
+			mid:'a2',
 			pid:'ak',
 			isParent: false,
 			icon:'../images/MenuIcon/jiancetaijianzhu.gif',
